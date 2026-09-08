@@ -7,109 +7,85 @@
 <meta name="description" content="Lefouzebreizh Studio conçoit des sites internet et des applications mobiles sur mesure, à Rennes et partout ailleurs.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0b1120;
-    --bg-card: #12203a;
-    --violet: #a78bfa;
-    --accent: #1fd1c5;
-    --accent2: #7ee8e0;
-    --text: #f4f6fb;
-    --text-dim: #a9b3c9;
-    --hairline: #1e2f52;
+    --noir: #05080a;
+    --turquoise: #2fe2c8;
+    --violet: #8d7bf3;
+    --ink: #eef3f2;
+    --mist: #8f9ba3;
+    --hairline: rgba(255, 255, 255, 0.09);
 
     --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-    --body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-
-    /* Le rythme vertical se cale sur la hauteur de fenêtre : c'est ce qui
-       permet à la page de tenir d'un seul écran sur un 1366x768 comme de
-       respirer sur un grand moniteur, sans point de rupture. */
-    --pad-shell: clamp(14px, 2.4vh, 44px);
-    --gap-lg: clamp(13px, 2.35vh, 32px);
-    --gap-md: clamp(10px, 1.6vh, 20px);
-    --pad-card: clamp(14px, 1.9vh, 26px);
-    --radius: 16px;
-
     --entree: cubic-bezier(0.22, 0.7, 0.3, 1);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
+  html { color-scheme: dark; }
+
   body {
     min-height: 100vh;
-    min-height: 100svh;
-    display: flex;
-    flex-direction: column;
-    font-family: var(--body);
-    background: var(--bg);
-    color: var(--text);
+    min-height: 100dvh;
+    font-family: var(--display);
+    font-weight: 400;
+    background: var(--noir);
+    color: var(--ink);
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Halos colorés en fond, très lents. Animés en transform plutôt qu'en
-     background-position : le compositeur les déplace sans recalculer le
-     dégradé à chaque image, donc sans faire tourner le ventilateur. */
+  /* Halo d'ambiance : le turquoise domine largement en surface et en
+     intensité, le violet reste une touche discrète au second plan — c'est
+     la palette qui doit se lire d'un coup d'œil, pas une répartition à
+     parts égales. Animé en transform pour que le compositeur le déplace
+     sans jamais recalculer le dégradé. */
   body::before {
     content: "";
     position: fixed;
-    inset: -25%;
+    inset: -20%;
     z-index: 0;
     pointer-events: none;
     background:
-      radial-gradient(42% 38% at 18% 24%, rgba(167, 139, 250, 0.18), transparent 70%),
-      radial-gradient(38% 38% at 82% 72%, rgba(31, 209, 197, 0.14), transparent 70%),
-      radial-gradient(34% 34% at 62% 14%, rgba(126, 232, 224, 0.07), transparent 70%);
-    animation: derive 46s ease-in-out infinite alternate;
+      radial-gradient(46% 42% at 18% 16%, rgba(47, 226, 200, 0.17), transparent 72%),
+      radial-gradient(40% 38% at 88% 78%, rgba(47, 226, 200, 0.08), transparent 70%),
+      radial-gradient(28% 26% at 78% 12%, rgba(141, 123, 243, 0.10), transparent 70%);
+    animation: derive 54s ease-in-out infinite alternate;
   }
 
   @keyframes derive {
-    from { transform: translate3d(-2%, -1.5%, 0) scale(1); }
-    to   { transform: translate3d(2.5%, 2%, 0) scale(1.09); }
+    from { transform: translate3d(-2%, -1%, 0) scale(1); }
+    to   { transform: translate3d(2%, 1.5%, 0) scale(1.08); }
   }
 
-  /* `margin-block: auto` centre verticalement tant qu'il reste de la place et
-     rend la main au défilement normal quand il n'y en a plus. C'est aussi ce
-     qui laissera la page grandir proprement quand les réalisations se
-     multiplieront, sans qu'aucune règle ne soit à retoucher. */
   .shell {
     position: relative;
     z-index: 1;
-    width: 100%;
-    max-width: 1400px;
+    max-width: 1040px;
     margin-inline: auto;
-    margin-block: auto;
-    padding: var(--pad-shell) clamp(20px, 4vw, 56px);
+    padding: 0 clamp(24px, 5vw, 64px);
   }
 
-  /* ---- Apparition ----------------------------------------------------
-     Un seul geste, répété à l'identique sur chaque section : monter de
-     quelques pixels en fondu. Il est porté par les sections et non par les
-     cartes, pour deux raisons — « apparition des sections » est ce qui est
-     demandé, et un fond d'animation posé sur une carte gèlerait sa
-     transformation finale, ce qui neutraliserait le soulèvement au survol. */
-  /* État par défaut : tout est visible. C'est le socle de sécurité — le
-     contenu ne dépend d'aucun script pour s'afficher. Sans JavaScript, sans
-     IntersectionObserver, ou si le script échoue, la page reste lisible.
-
-     L'apparition n'a délibérément pas été faite avec `animation-timeline:
-     view()`. Deux raisons, toutes deux constatées à la mesure : sur un écran
-     de bureau la page ne défile pas, si bien que les sections du bas
-     restaient figées à mi-parcours — le pied de page tombait à une opacité
-     de 0 en 1280x720 ; et l'état de ces animations ne se recalcule pas de
-     façon synchrone, ce qui les rend invérifiables. Un mécanisme qu'on ne
-     peut pas vérifier n'a pas sa place sur une vitrine. */
-  .reveal {
-    opacity: 1;
+  /* Rythme vertical : un seul espacement généreux entre les grands blocs,
+     posé une fois ici plutôt que répété section par section. La page est
+     désormais pensée pour défiler — plus pour tenir sur un écran — donc
+     l'espace autour du contenu est la variable qu'on ne rogne plus. */
+  .shell > * + * {
+    margin-top: clamp(72px, 11vw, 148px);
   }
+
+  /* ---- Apparition ------------------------------------------------------
+     Mécanisme inchangé dans son principe : socle visible sans JavaScript,
+     amplitude réduite pour rester discrète, un seul geste répété. */
+  .reveal { opacity: 1; }
 
   html.js .reveal {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease,
-                transform 0.6s var(--entree);
-    transition-delay: calc(var(--i, 0) * 80ms);
+    transform: translateY(14px);
+    transition: opacity 0.7s ease,
+                transform 0.7s var(--entree);
+    transition-delay: calc(var(--i, 0) * 90ms);
   }
 
   html.js .reveal.vu {
@@ -117,148 +93,94 @@
     transform: none;
   }
 
-  /* ---- En-tête -------------------------------------------------------- */
-  header { margin-bottom: var(--gap-lg); }
+  /* ---- Hero -------------------------------------------------------- */
+  .hero {
+    padding-top: clamp(88px, 15vh, 196px);
+  }
 
-  h1 {
-    font-family: var(--display);
+  .hero h1 {
     font-weight: 800;
-    /* La borne haute est bridée par la hauteur autant que par la largeur :
-       sur un écran large mais court, c'est la hauteur qui manque. */
-    font-size: clamp(2.2rem, min(4.6vw, 7.4vh), 4.2rem);
-    line-height: 0.96;
-    letter-spacing: -0.035em;
-    color: var(--violet);
-    margin-bottom: clamp(8px, 1.1vh, 16px);
+    font-size: clamp(2.75rem, 6vw + 1.2rem, 6.5rem);
+    line-height: 0.94;
+    letter-spacing: -0.04em;
+    max-width: 14ch;
+    color: var(--ink);
   }
 
-  .lede {
-    color: var(--text-dim);
-    font-size: clamp(1.02rem, 1.25vw, 1.28rem);
-    max-width: 60ch;
+  .hero .lede {
+    margin-top: clamp(20px, 3vh, 30px);
+    color: var(--mist);
+    font-size: clamp(1.05rem, 1.4vw, 1.28rem);
+    font-weight: 400;
+    max-width: 44ch;
   }
 
-  /* ---- Grilles -------------------------------------------------------- */
-  .offers {
+  /* ---- Listes de lignes -------------------------------------------------
+     Un seul système, réutilisé pour les prestations et les réalisations :
+     un filet, un titre, un texte — pas de carte, pas d'ombre, pas de
+     radius. La hiérarchie vient de la typographie et de l'espace, pas
+     d'un cadre. */
+  .rows { border-top: 1px solid var(--hairline); }
+
+  .row {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--gap-md);
-    margin-bottom: var(--gap-lg);
+    grid-template-columns: minmax(160px, 260px) 1fr;
+    gap: clamp(16px, 3vw, 48px);
+    padding-block: clamp(26px, 4vh, 42px);
+    border-bottom: 1px solid var(--hairline);
   }
 
-  /* `auto-fit` et non `auto-fill` : avec trois réalisations les cartes
-     s'étirent pour occuper la ligne, et à quinze la grille se replie d'
-     elle-même en autant de rangées que nécessaire. Rien à retoucher entre
-     les deux. */
-  .projects {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(258px, 1fr));
-    gap: var(--gap-md);
-    margin-bottom: var(--gap-lg);
-  }
-
-  .card {
-    background: var(--bg-card);
-    border: 1px solid var(--hairline);
-    border-radius: var(--radius);
-    padding: var(--pad-card);
-    /* Seules des propriétés que le compositeur sait animer sans repasser par
-       la mise en page. */
-    transition: transform 0.28s var(--entree),
-                box-shadow 0.28s ease,
-                border-color 0.28s ease;
-  }
-
-  .offer { border-left: 3px solid var(--accent); }
-  .project { border-left: 3px solid var(--violet); }
-
-  .card:hover,
-  .card:focus-within {
-    transform: translateY(-6px);
-    border-color: rgba(31, 209, 197, 0.42);
-    box-shadow: 0 22px 44px -16px rgba(0, 0, 0, 0.78),
-                0 0 0 1px rgba(31, 209, 197, 0.22);
-  }
-
-  .card h2 {
-    font-family: var(--display);
+  .row h2 {
     font-weight: 600;
-    font-size: clamp(1.1rem, 1.35vw, 1.32rem);
+    font-size: clamp(1.12rem, 1.5vw, 1.36rem);
     letter-spacing: -0.015em;
-    color: var(--accent2);
-    margin-bottom: 7px;
+    color: var(--ink);
+    transition: color 0.25s ease;
   }
 
-  .card p {
-    color: var(--text-dim);
-    font-size: clamp(0.9rem, 0.98vw, 1rem);
-    /* Le conteneur élargi ne doit pas allonger les lignes au-delà du
-       confortable : la carte s'étire, la colonne de texte s'arrête avant la
-       limite de lisibilité. */
-    max-width: 68ch;
+  .row:hover h2,
+  .row:focus-within h2 {
+    color: var(--turquoise);
   }
 
-  .icon {
-    display: inline-grid;
-    place-items: center;
-    width: 34px;
-    height: 34px;
-    margin-bottom: clamp(6px, 1vh, 13px);
-    font-size: 1.05rem;
-    line-height: 1;
-    border-radius: 10px;
-    background: rgba(31, 209, 197, 0.1);
-    border: 1px solid rgba(31, 209, 197, 0.24);
+  .row p {
+    color: var(--mist);
+    font-size: clamp(0.97rem, 1.05vw, 1.06rem);
+    max-width: 62ch;
   }
 
-  /* Le filet porte une information : il sépare les offres du travail déjà
-     livré. Il n'est pas là pour décorer. */
   .section-title {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    font-family: var(--display);
     font-weight: 600;
-    font-size: clamp(1rem, 1.15vw, 1.16rem);
-    letter-spacing: -0.012em;
-    color: var(--text);
-    margin-bottom: var(--gap-md);
+    font-size: clamp(1.4rem, 2vw, 1.85rem);
+    letter-spacing: -0.02em;
+    margin-bottom: clamp(20px, 3vh, 30px);
   }
 
-  .section-title::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(31, 209, 197, 0.5), transparent);
-  }
-
-  /* ---- Appel à contact ------------------------------------------------
-     En barre plutôt qu'en bloc centré : le gain de hauteur est ce qui fait
-     tenir la page dans l'écran d'un portable. */
+  /* ---- Appel à contact ---------------------------------------------
+     Posé à même la page, sans cadre : un filet au-dessus suffit à
+     détacher la section de ce qui précède. */
   .cta {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
     flex-wrap: wrap;
-    gap: var(--gap-md);
-    background: var(--bg-card);
-    border: 1px solid var(--hairline);
-    border-left: 3px solid var(--accent);
-    border-radius: var(--radius);
-    padding: var(--pad-card) clamp(20px, 2.6vw, 34px);
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: clamp(24px, 4vw, 48px);
+    padding-top: clamp(56px, 9vh, 96px);
+    border-top: 1px solid var(--hairline);
   }
 
   .cta h2 {
-    font-family: var(--display);
     font-weight: 800;
-    font-size: clamp(1.25rem, 1.9vw, 1.75rem);
-    letter-spacing: -0.028em;
-    margin-bottom: 4px;
+    font-size: clamp(1.9rem, 3.1vw, 2.7rem);
+    letter-spacing: -0.03em;
+    max-width: 16ch;
   }
 
   .cta p {
-    color: var(--text-dim);
-    font-size: clamp(0.9rem, 0.98vw, 1rem);
+    margin-top: 12px;
+    color: var(--mist);
+    font-size: clamp(1rem, 1.1vw, 1.1rem);
+    max-width: 42ch;
   }
 
   .btn {
@@ -266,56 +188,55 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    /* 48 px de haut : confortable au pouce, au-delà des 44 px recommandés. */
-    min-height: 48px;
-    background: var(--accent);
-    color: #0b1120;
+    min-height: 50px;
+    background: var(--turquoise);
+    color: #05201c;
     font-family: var(--display);
     font-weight: 600;
-    font-size: clamp(0.94rem, 1vw, 1.04rem);
-    padding: 12px 32px;
+    font-size: clamp(0.95rem, 1vw, 1.04rem);
+    padding: 13px 32px;
     border-radius: 30px;
     text-decoration: none;
     transition: transform 0.22s var(--entree),
-                background-color 0.22s ease,
                 box-shadow 0.22s ease;
   }
 
+  /* La seule touche de violet vraiment interactive de la page : elle se
+     mêle au turquoise dans l'ombre du bouton, sans jamais dominer. */
   .btn:hover {
-    background: var(--accent2);
     transform: translateY(-2px);
-    box-shadow: 0 14px 30px -12px rgba(31, 209, 197, 0.85);
+    box-shadow: 0 20px 40px -16px rgba(141, 123, 243, 0.35),
+                0 12px 26px -14px rgba(47, 226, 200, 0.6);
   }
 
   :focus-visible {
-    outline: 3px solid var(--accent2);
+    outline: 3px solid var(--turquoise);
     outline-offset: 3px;
-    border-radius: 6px;
+    border-radius: 4px;
   }
 
   footer {
-    color: var(--text-dim);
-    font-size: 0.86rem;
-    margin-top: var(--gap-lg);
+    padding-top: 28px;
+    padding-bottom: clamp(48px, 8vh, 96px);
+    border-top: 1px solid var(--hairline);
+    color: var(--mist);
+    font-size: 0.88rem;
   }
 
   /* ---- Adaptations ---------------------------------------------------- */
-  @media (max-width: 900px) {
-    .projects { grid-template-columns: 1fr; }
-  }
-
   @media (max-width: 640px) {
-    .offers { grid-template-columns: 1fr; }
+    .row { grid-template-columns: 1fr; gap: 8px; }
+    .row p { max-width: none; }
     .cta { flex-direction: column; align-items: stretch; }
+    .cta h2, .cta p { max-width: none; }
     .btn { width: 100%; }
-    .card p { max-width: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     body::before { animation: none; }
     html.js .reveal { opacity: 1; transform: none; transition: none; }
-    .card, .btn { transition: none; }
-    .card:hover, .card:focus-within, .btn:hover { transform: none; }
+    .btn { transition: none; }
+    .btn:hover { transform: none; }
   }
 </style>
 <script>
@@ -332,42 +253,41 @@
 
 <main class="shell">
 
-  <header class="reveal" style="--i:0">
+  <header class="hero reveal" style="--i:0">
     <h1>Lefouzebreizh Studio</h1>
     <p class="lede">Sites internet et applications sur mesure, conçus avec âme — à Rennes et partout ailleurs.</p>
   </header>
 
-  <div class="offers reveal" style="--i:1">
-    <article class="card offer">
-      <div class="icon" aria-hidden="true">🌐</div>
+  <section class="rows reveal" style="--i:1" aria-label="Prestations">
+    <article class="row">
       <h2>Site internet sur mesure</h2>
       <p>Une vitrine claire, rapide et efficace pour présenter votre activité, quel que soit votre métier. Conçue pour convertir, pas juste pour faire joli.</p>
     </article>
-    <article class="card offer">
-      <div class="icon" aria-hidden="true">📱</div>
+    <article class="row">
       <h2>Application sur mesure</h2>
       <p>Développement d'applications mobiles (Flutter) taillées pour votre besoin réel, du cahier des charges jusqu'au déploiement sur les stores.</p>
     </article>
-  </div>
+  </section>
 
-  <h3 class="section-title reveal" style="--i:2">Réalisations</h3>
+  <section class="reveal" style="--i:2">
+    <h3 class="section-title">Réalisations</h3>
+    <div class="rows" aria-label="Réalisations">
+      <article class="row">
+        <h2>Artisan Express</h2>
+        <p>Sites vitrines à prix fixe pour les artisans locaux, en ligne rapidement.</p>
+      </article>
+      <article class="row">
+        <h2>Look and Find</h2>
+        <p>Application mobile d'identification d'objets par la caméra, avec comparateur de prix.</p>
+      </article>
+      <article class="row">
+        <h2>Le Coffre</h2>
+        <p>Coffre-fort numérique chiffré multi-utilisateurs avec détection automatique des échéances.</p>
+      </article>
+    </div>
+  </section>
 
-  <div class="projects reveal" style="--i:3">
-    <article class="card project">
-      <h2>Artisan Express</h2>
-      <p>Sites vitrines à prix fixe pour les artisans locaux, en ligne rapidement.</p>
-    </article>
-    <article class="card project">
-      <h2>Look and Find</h2>
-      <p>Application mobile d'identification d'objets par la caméra, avec comparateur de prix.</p>
-    </article>
-    <article class="card project">
-      <h2>Le Coffre</h2>
-      <p>Coffre-fort numérique chiffré multi-utilisateurs avec détection automatique des échéances.</p>
-    </article>
-  </div>
-
-  <section class="cta reveal" style="--i:4">
+  <section class="cta reveal" style="--i:3">
     <div>
       <h2>Une idée de site ou d'application ?</h2>
       <p>Parlons-en directement, sans jargon ni promesses en l'air.</p>
@@ -375,7 +295,7 @@
     <a class="btn" href="https://www.facebook.com/profile.php?id=61551926225174" target="_blank" rel="noopener">Nous contacter sur Facebook</a>
   </section>
 
-  <footer class="reveal" style="--i:5">
+  <footer class="reveal" style="--i:4">
     © 2026 Lefouzebreizh Studio — Rennes, France
   </footer>
 
@@ -385,29 +305,15 @@
 (function () {
   if (!document.documentElement.classList.contains('js')) return;
 
-  /* Une section se dévoile dès qu'elle entre dans le cadre. Sur un écran de
-     bureau la page tient d'un seul tenant : toutes sont vues d'emblée et se
-     succèdent au chargement, échelonnées par `transition-delay`. Sur un
-     téléphone, elles se découvrent au fil du défilement. Un seul mécanisme
-     pour les deux cas.
-
-     Volontairement en écoute du défilement plutôt qu'avec un
-     IntersectionObserver : sur six éléments le coût est nul, il y a une
-     dépendance de moins, et surtout ce chemin-là est vérifiable — un
-     défilement provoqué déclenche bien l'événement, là où l'observateur
-     restait muet et laissait le bas de page invisible sans que rien ne le
-     signale. */
+  /* En écoute du défilement plutôt qu'avec un IntersectionObserver : sur
+     une poignée d'éléments le coût est nul, et ce chemin reste vérifiable
+     — un défilement provoqué déclenche bien l'événement. */
   var restantes = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
 
   function reveler() {
     var hauteur = window.innerHeight || document.documentElement.clientHeight;
     restantes = restantes.filter(function (el) {
       var r = el.getBoundingClientRect();
-      /* Le simple recouvrement, sans marge de confort. Une marge — même de
-         5 % — rend inatteignables les éléments du bas du document : arrivé
-         en fin de défilement, le pied de page affleure le bord inférieur et
-         ne franchit jamais le seuil. Mesuré : il restait invisible pour de
-         bon. */
       if (r.top < hauteur && r.bottom > 0) {
         el.classList.add('vu');
         return false;
@@ -424,8 +330,8 @@
   window.addEventListener('resize', reveler, { passive: true });
   reveler();
 
-  /* Filet de sécurité : quoi qu'il advienne, rien de ce qui est à l'écran ne
-     doit rester invisible. */
+  /* Filet de sécurité : quoi qu'il advienne, rien de ce qui est à l'écran
+     ne doit rester invisible. */
   setTimeout(reveler, 1500);
 })();
 </script>
