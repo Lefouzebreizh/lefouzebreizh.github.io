@@ -3,83 +3,87 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lefouzebreizh Studio — Sites et applications sur mesure</title>
+<title>Lefouzebreizh Studio — Sites & applications sur mesure</title>
 <style>
   :root {
-    --bg: #0b1120;
-    --bg-card: #16213a;
-    --accent: #38bdf8;
-    --accent2: #34d399;
-    --text: #f1f5f9;
-    --text-dim: #94a3b8;
+    --bg: #073b4c;
+    --bg-card: #0f5c73;
+    --accent: #1fd1c5;
+    --accent2: #7ee8e0;
+    --text: #f0fbfa;
+    --text-dim: #b7dedb;
   }
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; }
   body {
     font-family: -apple-system, "Segoe UI", Arial, sans-serif;
-    background: var(--bg);
+    background: linear-gradient(160deg, #073b4c, #0a5468);
     color: var(--text);
-    margin: 0;
     line-height: 1.5;
   }
-  .container { max-width: 900px; margin: 0 auto; padding: 60px 24px 100px; }
+  .full { width: 100%; padding: 60px 6vw 100px; }
   header { text-align: center; margin-bottom: 60px; }
-  header h1 { font-size: 2.4em; margin: 0 0 10px; }
-  header p { color: var(--text-dim); font-size: 1.15em; max-width: 560px; margin: 0 auto; }
+  header h1 { font-size: 2.8em; margin: 0 0 10px; }
+  header p { color: var(--text-dim); font-size: 1.2em; max-width: 700px; margin: 0 auto; }
 
-  .offers { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 70px; }
+  .offers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 70px; width: 100%; }
   @media (max-width: 640px) { .offers { grid-template-columns: 1fr; } }
   .offer {
     background: var(--bg-card);
     border-radius: 16px;
-    padding: 28px 24px;
-    border: 1px solid #24304d;
+    padding: 32px 28px;
+    border: 1px solid #146a80;
   }
-  .offer .icon { font-size: 1.8em; margin-bottom: 10px; }
-  .offer h2 { margin: 0 0 8px; font-size: 1.3em; color: var(--accent); }
+  .offer .icon { font-size: 2em; margin-bottom: 10px; }
+  .offer h2 { margin: 0 0 8px; font-size: 1.4em; color: var(--accent2); }
   .offer p { margin: 0; color: var(--text-dim); }
 
   h3.section-title {
     font-size: 1.1em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     color: var(--text-dim);
-    margin-bottom: 20px;
+    margin-bottom: 24px;
   }
 
+  .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; margin-bottom: 70px; }
+  @media (max-width: 900px) { .projects { grid-template-columns: 1fr; } }
   .project {
     background: var(--bg-card);
     border-radius: 14px;
-    padding: 22px 24px;
-    margin-bottom: 16px;
-    border: 1px solid #24304d;
+    padding: 24px;
+    border: 1px solid #146a80;
   }
-  .project h2 { margin: 0 0 6px 0; font-size: 1.2em; color: var(--accent2); }
-  .project p { margin: 0; color: var(--text-dim); }
+  .project h2 { margin: 0 0 8px 0; font-size: 1.25em; color: var(--accent2); }
+  .project p { color: var(--text-dim); margin: 0; }
 
   .cta {
     text-align: center;
-    margin-top: 70px;
-    padding: 40px 24px;
-    background: linear-gradient(135deg, #16213a, #1c2b4d);
-    border-radius: 18px;
+    background: var(--bg-card);
+    border-radius: 20px;
+    padding: 50px 6vw;
+    border: 1px solid #146a80;
   }
-  .cta h2 { margin: 0 0 10px; font-size: 1.5em; }
-  .cta p { color: var(--text-dim); margin: 0 0 24px; }
-  .cta a {
+  .cta h2 { font-size: 1.8em; margin-bottom: 14px; }
+  .cta p { color: var(--text-dim); margin-bottom: 26px; }
+  .btn {
     display: inline-block;
     background: var(--accent);
-    color: #0b1120;
-    font-weight: 600;
-    padding: 14px 32px;
+    color: #073b4c;
+    font-weight: bold;
+    padding: 14px 34px;
     border-radius: 30px;
     text-decoration: none;
+    font-size: 1.05em;
   }
+  .btn:hover { background: var(--accent2); }
 
-  footer { text-align: center; margin-top: 60px; color: #64748b; font-size: 0.9em; }
+  footer { text-align: center; color: var(--text-dim); margin-top: 60px; font-size: 0.9em; }
 </style>
 </head>
 <body>
-<div class="container">
+
+<div class="full">
 
   <header>
     <h1>Lefouzebreizh Studio</h1>
@@ -90,40 +94,42 @@
     <div class="offer">
       <div class="icon">🌐</div>
       <h2>Site internet sur mesure</h2>
-      <p>Vitrine, présentation d'activité ou projet perso : un site clair, rapide et pensé pour vous, pas un template recyclé. Ouvert à tous, pas seulement aux artisans.</p>
+      <p>Une vitrine claire, rapide et efficace pour présenter votre activité, quel que soit votre métier. Conçue pour convertir, pas juste pour faire joli.</p>
     </div>
     <div class="offer">
       <div class="icon">📱</div>
       <h2>Application sur mesure</h2>
-      <p>Une idée d'appli mobile ? De la conception au développement Flutter, je vous accompagne du concept jusqu'au Play Store.</p>
+      <p>Développement d'applications mobiles (Flutter) taillées pour votre besoin réel, du cahier des charges jusqu'au déploiement sur les stores.</p>
     </div>
   </div>
 
   <h3 class="section-title">Réalisations</h3>
-
-  <div class="project">
-    <h2>Artisan Express</h2>
-    <p>Sites vitrines à prix fixe pour artisans et commerçants locaux, livrés en 24h.</p>
-  </div>
-
-  <div class="project">
-    <h2>Look and Find</h2>
-    <p>Application mobile Flutter d'identification d'objets par caméra, pour comparer des prix ou obtenir de l'aide à distance.</p>
-  </div>
-
-  <div class="project">
-    <h2>Le Coffre</h2>
-    <p>Coffre-fort numérique multi-utilisateurs pour documents importants, avec détection d'échéances.</p>
+  <div class="projects">
+    <div class="project">
+      <h2>Artisan Express</h2>
+      <p>Sites vitrines à prix fixe pour les artisans locaux, en ligne rapidement.</p>
+    </div>
+    <div class="project">
+      <h2>Look and Find</h2>
+      <p>Application mobile d'identification d'objets par la caméra, avec comparateur de prix.</p>
+    </div>
+    <div class="project">
+      <h2>Le Coffre</h2>
+      <p>Coffre-fort numérique chiffré multi-utilisateurs avec détection automatique des échéances.</p>
+    </div>
   </div>
 
   <div class="cta">
-    <h2>Une idée en tête ?</h2>
-    <p>Parlons-en, sans engagement.</p>
-    <a href="https://www.facebook.com/profile.php?id=61551926225174">Me contacter sur Facebook</a>
+    <h2>Une idée de site ou d'application ?</h2>
+    <p>Parlons-en directement, sans jargon ni promesses en l'air.</p>
+    <a class="btn" href="https://www.facebook.com/profile.php?id=61551926225174" target="_blank">Nous contacter sur Facebook</a>
   </div>
 
-  <footer>&copy; 2026 Lefouzebreizh Studio</footer>
+  <footer>
+    © 2026 Lefouzebreizh Studio — Rennes, France
+  </footer>
 
 </div>
+
 </body>
 </html>
