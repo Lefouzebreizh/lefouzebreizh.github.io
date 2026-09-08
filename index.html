@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lefouzebreizh Studio — Sites & applications sur mesure</title>
+<title>Lefouzebreizh Studio — Sites &amp; applications sur mesure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0b1120;
@@ -13,126 +16,318 @@
     --accent2: #7ee8e0;
     --text: #f4f6fb;
     --text-dim: #a9b3c9;
+    --hairline: #1e2f52;
+
+    --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+
+    /* Le rythme vertical se cale sur la hauteur de fenêtre : c'est ce qui
+       permet à la page de tenir d'un seul écran sur un 1366x768 comme de
+       respirer sur un grand moniteur, sans point de rupture. */
+    --pad-shell: clamp(20px, 3.4vh, 44px);
+    --gap-lg: clamp(18px, 3.2vh, 34px);
+    --gap-md: clamp(12px, 1.9vh, 20px);
+    --pad-card: clamp(16px, 2.3vh, 24px);
+    --radius: 14px;
   }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { width: 100%; }
+
   body {
-    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--body);
     background: var(--bg);
     color: var(--text);
-    line-height: 1.45;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
   }
-  .full { width: 100%; padding: 24px 6vw 50px; }
-  header { text-align: center; margin-bottom: 28px; }
-  header h1 { font-size: 2.4em; margin: 0 0 6px; color: var(--violet); }
-  header p { color: var(--text-dim); font-size: 1.05em; max-width: 700px; margin: 0 auto; }
 
-  .offers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-bottom: 34px; width: 100%; }
-  @media (max-width: 640px) { .offers { grid-template-columns: 1fr; } }
-  .offer {
-    background: var(--bg-card);
-    border-radius: 14px;
-    padding: 22px 22px;
-    border: 1px solid #1e2f52;
-    border-left: 3px solid var(--accent);
+  /* Halos colorés en fond, très lents. Animés en transform plutôt qu'en
+     background-position : le compositeur les déplace sans recalculer le
+     dégradé à chaque image, donc sans faire tourner le ventilateur. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: -25%;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(42% 38% at 18% 24%, rgba(167, 139, 250, 0.18), transparent 70%),
+      radial-gradient(38% 38% at 82% 72%, rgba(31, 209, 197, 0.14), transparent 70%),
+      radial-gradient(34% 34% at 62% 14%, rgba(126, 232, 224, 0.07), transparent 70%);
+    animation: derive 46s ease-in-out infinite alternate;
   }
-  .offer .icon { font-size: 1.7em; margin-bottom: 6px; }
-  .offer h2 { margin: 0 0 6px; font-size: 1.25em; color: var(--accent2); }
-  .offer p { margin: 0; color: var(--text-dim); font-size: 0.95em; }
 
-  h3.section-title {
-    font-size: 1em;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+  @keyframes derive {
+    from { transform: translate3d(-2%, -1.5%, 0) scale(1); }
+    to   { transform: translate3d(2.5%, 2%, 0) scale(1.09); }
+  }
+
+  /* `margin-block: auto` centre verticalement tant qu'il reste de la place et
+     rend la main au défilement normal quand il n'y en a plus. Un
+     `justify-content: center` sur le conteneur, lui, rognerait le haut de la
+     page sans permettre de le rattraper. */
+  .shell {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1140px;
+    margin-inline: auto;
+    margin-block: auto;
+    padding: var(--pad-shell) clamp(20px, 5vw, 56px);
+  }
+
+  /* Entrée : une seule séquence au chargement, décalée dans l'ordre de
+     lecture. `backwards` et non `both` — en `both` l'animation gèlerait la
+     transformation finale et le survol des cartes n'aurait plus aucun effet. */
+  @keyframes monter {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .anim {
+    animation: monter 0.72s cubic-bezier(0.22, 0.7, 0.3, 1) backwards;
+    animation-delay: calc(var(--i, 0) * 85ms);
+  }
+
+  header { margin-bottom: var(--gap-lg); }
+
+  h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2.1rem, 3.6vw, 3.2rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    color: var(--violet);
+    margin-bottom: clamp(8px, 1.2vh, 14px);
+  }
+
+  .lede {
     color: var(--text-dim);
-    margin-bottom: 14px;
+    font-size: clamp(1rem, 1.15vw, 1.14rem);
+    max-width: 58ch;
   }
 
-  .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; margin-bottom: 34px; }
-  @media (max-width: 900px) { .projects { grid-template-columns: 1fr; } }
-  .project {
+  .offers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--gap-md);
+    margin-bottom: var(--gap-lg);
+  }
+
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap-md);
+    margin-bottom: var(--gap-lg);
+  }
+
+  .card {
     background: var(--bg-card);
-    border-radius: 12px;
-    padding: 18px;
-    border: 1px solid #1e2f52;
-    border-left: 3px solid var(--violet);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    padding: var(--pad-card);
+    /* Deux propriétés seulement en transition : le compositeur les gère sans
+       repasser par la mise en page. */
+    transition: transform 0.28s cubic-bezier(0.22, 0.7, 0.3, 1),
+                box-shadow 0.28s ease,
+                border-color 0.28s ease;
   }
-  .project h2 { margin: 0 0 6px 0; font-size: 1.1em; color: var(--accent2); }
-  .project p { color: var(--text-dim); margin: 0; font-size: 0.92em; }
 
+  .offer { border-left: 3px solid var(--accent); }
+  .project { border-left: 3px solid var(--violet); }
+
+  .card:hover,
+  .card:focus-within {
+    transform: translateY(-6px);
+    border-color: rgba(31, 209, 197, 0.42);
+    box-shadow: 0 20px 40px -16px rgba(0, 0, 0, 0.75),
+                0 0 0 1px rgba(31, 209, 197, 0.22);
+  }
+
+  .card h2 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(1.04rem, 1.25vw, 1.2rem);
+    letter-spacing: -0.012em;
+    color: var(--accent2);
+    margin-bottom: 6px;
+  }
+
+  .card p {
+    color: var(--text-dim);
+    font-size: clamp(0.88rem, 0.95vw, 0.95rem);
+  }
+
+  .icon {
+    display: inline-grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    margin-bottom: clamp(8px, 1.1vh, 12px);
+    font-size: 1.05rem;
+    line-height: 1;
+    border-radius: 9px;
+    background: rgba(31, 209, 197, 0.1);
+    border: 1px solid rgba(31, 209, 197, 0.24);
+  }
+
+  /* Le filet porte une information : il sépare les offres du travail déjà
+     livré. Il n'est pas là pour décorer. */
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(0.95rem, 1.05vw, 1.05rem);
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: var(--gap-md);
+  }
+
+  .section-title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(31, 209, 197, 0.5), transparent);
+  }
+
+  /* CTA en barre : le gain de hauteur par rapport à un bloc centré est ce qui
+     fait tenir la page dans un écran de portable. */
   .cta {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--gap-md);
     background: var(--bg-card);
-    border-radius: 16px;
-    padding: 30px 6vw;
-    border: 1px solid #1e2f52;
+    border: 1px solid var(--hairline);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    padding: var(--pad-card) clamp(18px, 2.6vw, 30px);
   }
-  .cta h2 { font-size: 1.5em; margin-bottom: 8px; }
-  .cta p { color: var(--text-dim); margin-bottom: 18px; }
+
+  .cta h2 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(1.15rem, 1.6vw, 1.45rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 3px;
+  }
+
+  .cta p {
+    color: var(--text-dim);
+    font-size: clamp(0.88rem, 0.95vw, 0.95rem);
+  }
+
   .btn {
+    flex-shrink: 0;
     display: inline-block;
     background: var(--accent);
     color: #0b1120;
-    font-weight: bold;
-    padding: 12px 30px;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(0.92rem, 1vw, 1rem);
+    padding: 12px 28px;
     border-radius: 30px;
     text-decoration: none;
-    font-size: 1em;
+    transition: transform 0.22s cubic-bezier(0.22, 0.7, 0.3, 1),
+                background-color 0.22s ease,
+                box-shadow 0.22s ease;
   }
-  .btn:hover { background: var(--accent2); }
 
-  footer { text-align: center; color: var(--text-dim); margin-top: 30px; font-size: 0.85em; }
+  .btn:hover {
+    background: var(--accent2);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px -12px rgba(31, 209, 197, 0.85);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent2);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  footer {
+    color: var(--text-dim);
+    font-size: 0.83rem;
+    margin-top: var(--gap-lg);
+  }
+
+  @media (max-width: 900px) {
+    .projects { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .offers { grid-template-columns: 1fr; }
+    .cta { flex-direction: column; align-items: flex-start; }
+    .btn { width: 100%; text-align: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body::before { animation: none; }
+    .anim { animation: none; }
+    .card, .btn { transition: none; }
+    .card:hover, .card:focus-within, .btn:hover { transform: none; }
+  }
 </style>
 </head>
 <body>
 
-<div class="full">
+<main class="shell">
 
-  <header>
+  <header class="anim" style="--i:0">
     <h1>Lefouzebreizh Studio</h1>
-    <p>Sites internet et applications sur mesure, conçus avec âme — à Rennes et partout ailleurs.</p>
+    <p class="lede">Sites internet et applications sur mesure, conçus avec âme — à Rennes et partout ailleurs.</p>
   </header>
 
   <div class="offers">
-    <div class="offer">
-      <div class="icon">🌐</div>
+    <article class="card offer anim" style="--i:1">
+      <div class="icon" aria-hidden="true">🌐</div>
       <h2>Site internet sur mesure</h2>
       <p>Une vitrine claire, rapide et efficace pour présenter votre activité, quel que soit votre métier. Conçue pour convertir, pas juste pour faire joli.</p>
-    </div>
-    <div class="offer">
-      <div class="icon">📱</div>
+    </article>
+    <article class="card offer anim" style="--i:2">
+      <div class="icon" aria-hidden="true">📱</div>
       <h2>Application sur mesure</h2>
       <p>Développement d'applications mobiles (Flutter) taillées pour votre besoin réel, du cahier des charges jusqu'au déploiement sur les stores.</p>
-    </div>
+    </article>
   </div>
 
-  <h3 class="section-title">Réalisations</h3>
+  <h3 class="section-title anim" style="--i:3">Réalisations</h3>
+
   <div class="projects">
-    <div class="project">
+    <article class="card project anim" style="--i:4">
       <h2>Artisan Express</h2>
       <p>Sites vitrines à prix fixe pour les artisans locaux, en ligne rapidement.</p>
-    </div>
-    <div class="project">
+    </article>
+    <article class="card project anim" style="--i:5">
       <h2>Look and Find</h2>
       <p>Application mobile d'identification d'objets par la caméra, avec comparateur de prix.</p>
-    </div>
-    <div class="project">
+    </article>
+    <article class="card project anim" style="--i:6">
       <h2>Le Coffre</h2>
       <p>Coffre-fort numérique chiffré multi-utilisateurs avec détection automatique des échéances.</p>
+    </article>
+  </div>
+
+  <section class="cta anim" style="--i:7">
+    <div>
+      <h2>Une idée de site ou d'application ?</h2>
+      <p>Parlons-en directement, sans jargon ni promesses en l'air.</p>
     </div>
-  </div>
+    <a class="btn" href="https://www.facebook.com/profile.php?id=61551926225174" target="_blank" rel="noopener">Nous contacter sur Facebook</a>
+  </section>
 
-  <div class="cta">
-    <h2>Une idée de site ou d'application ?</h2>
-    <p>Parlons-en directement, sans jargon ni promesses en l'air.</p>
-    <a class="btn" href="https://www.facebook.com/profile.php?id=61551926225174" target="_blank">Nous contacter sur Facebook</a>
-  </div>
-
-  <footer>
+  <footer class="anim" style="--i:8">
     © 2026 Lefouzebreizh Studio — Rennes, France
   </footer>
 
-</div>
+</main>
 
 </body>
 </html>
