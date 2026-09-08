@@ -37,10 +37,13 @@
   }
 
   /* Halo d'ambiance : le turquoise domine largement en surface et en
-     intensité, le violet reste une touche discrète au second plan — c'est
-     la palette qui doit se lire d'un coup d'œil, pas une répartition à
-     parts égales. Animé en transform pour que le compositeur le déplace
-     sans jamais recalculer le dégradé. */
+     intensité, le violet reste une touche plus rare — mais une touche
+     réellement visible à l'œil, pas seulement présente dans le code. À 10%
+     d'opacité elle disparaissait purement et simplement à l'écran (constaté
+     sur capture réelle) : remontée à une intensité qui se voit vraiment,
+     et positionnée pour rester dans le cadre sur un écran de téléphone
+     étroit. Animé en transform pour que le compositeur le déplace sans
+     jamais recalculer le dégradé. */
   body::before {
     content: "";
     position: fixed;
@@ -50,7 +53,7 @@
     background:
       radial-gradient(46% 42% at 18% 16%, rgba(47, 226, 200, 0.17), transparent 72%),
       radial-gradient(40% 38% at 88% 78%, rgba(47, 226, 200, 0.08), transparent 70%),
-      radial-gradient(28% 26% at 78% 12%, rgba(141, 123, 243, 0.10), transparent 70%);
+      radial-gradient(38% 32% at 82% 10%, rgba(141, 123, 243, 0.30), transparent 72%);
     animation: derive 54s ease-in-out infinite alternate;
   }
 
@@ -156,16 +159,30 @@
     margin-bottom: clamp(20px, 3vh, 30px);
   }
 
+  /* Le filet passe du turquoise au violet : une touche du second accent
+     réellement visible, sans dépendre d'un survol impossible au doigt. */
+  .section-title::after {
+    content: "";
+    display: block;
+    width: 56px;
+    height: 3px;
+    margin-top: 14px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--turquoise), var(--violet));
+  }
+
   /* Étiquette d'état, volontairement sans lien : tant que la fiche Play
      Store n'existe pas, mieux vaut le dire clairement qu'ajouter un lien
-     mort ou une icône provisoire. */
+     mort ou une icône provisoire. Teintée de violet plutôt que d'un gris
+     neutre : c'est la touche du second accent sur un élément qui n'a pas
+     besoin d'un survol pour se montrer. */
   .status {
     display: inline-block;
     margin-top: 10px;
     padding: 5px 14px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(141, 123, 243, 0.45);
     border-radius: 999px;
-    color: var(--mist);
+    color: #c9bdfa;
     font-size: 0.82rem;
     font-weight: 500;
     letter-spacing: -0.005em;
