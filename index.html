@@ -156,6 +156,21 @@
     margin-bottom: clamp(20px, 3vh, 30px);
   }
 
+  /* Étiquette d'état, volontairement sans lien : tant que la fiche Play
+     Store n'existe pas, mieux vaut le dire clairement qu'ajouter un lien
+     mort ou une icône provisoire. */
+  .status {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    color: var(--mist);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+
   /* ---- Appel à contact ---------------------------------------------
      Posé à même la page, sans cadre : un filet au-dessus suffit à
      détacher la section de ce qui précède. */
@@ -287,7 +302,20 @@
     </div>
   </section>
 
-  <section class="cta reveal" style="--i:3">
+  <section class="reveal" style="--i:3">
+    <h3 class="section-title">Mes applications</h3>
+    <div class="rows" aria-label="Applications">
+      <article class="row">
+        <h2>Look and Find</h2>
+        <div>
+          <p>Application mobile d'identification d'objets par la caméra, avec comparateur de prix.</p>
+          <span class="status">Bientôt disponible</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="cta reveal" style="--i:4">
     <div>
       <h2>Une idée de site ou d'application ?</h2>
       <p>Parlons-en directement, sans jargon ni promesses en l'air.</p>
@@ -295,7 +323,7 @@
     <a class="btn" href="https://www.facebook.com/profile.php?id=61551926225174" target="_blank" rel="noopener">Nous contacter sur Facebook</a>
   </section>
 
-  <footer class="reveal" style="--i:4">
+  <footer class="reveal" style="--i:5">
     © 2026 Lefouzebreizh Studio — Rennes, France
   </footer>
 
