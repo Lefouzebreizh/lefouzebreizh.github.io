@@ -7,17 +7,19 @@
 <meta name="description" content="Lefouzebreizh Studio conçoit des sites internet et des applications mobiles sur mesure, à Rennes et partout ailleurs.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,800&family=Unbounded:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --noir: #05080a;
-    --turquoise: #2fe2c8;
-    --violet: #8d7bf3;
-    --ink: #eef3f2;
-    --mist: #8f9ba3;
+    --noir: #0f1115;
+    --relief: #171a20;
+    --turquoise: #40e0d0;
+    --violet: #7c3aed;
+    --ink: #f4f7f6;
+    --mist: #9aa7ad;
     --hairline: rgba(255, 255, 255, 0.09);
 
-    --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --display: "Unbounded", "Segoe UI", system-ui, sans-serif;
+    --corps: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
     --entree: cubic-bezier(0.22, 0.7, 0.3, 1);
   }
 
@@ -28,7 +30,7 @@
   body {
     min-height: 100vh;
     min-height: 100dvh;
-    font-family: var(--display);
+    font-family: var(--corps);
     font-weight: 400;
     background: var(--noir);
     color: var(--ink);
@@ -38,12 +40,9 @@
 
   /* Halo d'ambiance : le turquoise domine largement en surface et en
      intensité, le violet reste une touche plus rare — mais une touche
-     réellement visible à l'œil, pas seulement présente dans le code. À 10%
-     d'opacité elle disparaissait purement et simplement à l'écran (constaté
-     sur capture réelle) : remontée à une intensité qui se voit vraiment,
-     et positionnée pour rester dans le cadre sur un écran de téléphone
-     étroit. Animé en transform pour que le compositeur le déplace sans
-     jamais recalculer le dégradé. */
+     réellement visible à l'œil, pas seulement présente dans le code. Animé
+     en transform pour que le compositeur le déplace sans jamais recalculer
+     le dégradé. */
   body::before {
     content: "";
     position: fixed;
@@ -51,9 +50,9 @@
     z-index: 0;
     pointer-events: none;
     background:
-      radial-gradient(46% 42% at 18% 16%, rgba(47, 226, 200, 0.17), transparent 72%),
-      radial-gradient(40% 38% at 88% 78%, rgba(47, 226, 200, 0.08), transparent 70%),
-      radial-gradient(38% 32% at 82% 10%, rgba(141, 123, 243, 0.30), transparent 72%);
+      radial-gradient(46% 42% at 18% 16%, rgba(64, 224, 208, 0.17), transparent 72%),
+      radial-gradient(40% 38% at 88% 78%, rgba(64, 224, 208, 0.08), transparent 70%),
+      radial-gradient(38% 32% at 82% 10%, rgba(124, 58, 237, 0.32), transparent 72%);
     animation: derive 54s ease-in-out infinite alternate;
   }
 
@@ -71,11 +70,34 @@
   }
 
   /* Rythme vertical : un seul espacement généreux entre les grands blocs,
-     posé une fois ici plutôt que répété section par section. La page est
-     désormais pensée pour défiler — plus pour tenir sur un écran — donc
-     l'espace autour du contenu est la variable qu'on ne rogne plus. */
+     posé une fois ici plutôt que répété section par section. */
   .shell > * + * {
     margin-top: clamp(72px, 11vw, 148px);
+  }
+
+  /* ---- Texte en dégradé -------------------------------------------------
+     Le seul motif visuel répété du site : turquoise dominant, violet en
+     touche finale. Réservé aux grands titres, jamais au texte d'action —
+     à 15-16px un texte de bouton en violet clair sur fond sombre tombe
+     sous le seuil de contraste AA ; en grand titre gras, il le tient. */
+  .grad-text { color: var(--turquoise); }
+
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    .grad-text {
+      background-image: linear-gradient(120deg, var(--turquoise) 0%, var(--turquoise) 55%, var(--violet) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .grad-text {
+      background-image: none;
+      -webkit-text-fill-color: currentColor;
+      color: CanvasText;
+    }
   }
 
   /* ---- Apparition ------------------------------------------------------
@@ -102,12 +124,13 @@
   }
 
   .hero h1 {
+    font-family: var(--display);
     font-weight: 800;
-    font-size: clamp(2.75rem, 6vw + 1.2rem, 6.5rem);
-    line-height: 0.94;
-    letter-spacing: -0.04em;
-    max-width: 14ch;
-    color: var(--ink);
+    font-size: clamp(1.75rem, 9vw, 6.2rem);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    max-width: 15ch;
+    overflow-wrap: break-word;
   }
 
   .hero .lede {
@@ -119,18 +142,38 @@
   }
 
   /* ---- Listes de lignes -------------------------------------------------
-     Un seul système, réutilisé pour les prestations et les réalisations :
-     un filet, un titre, un texte — pas de carte, pas d'ombre, pas de
-     radius. La hiérarchie vient de la typographie et de l'espace, pas
-     d'un cadre. */
+     Un seul système, réutilisé pour les prestations : un filet, un titre,
+     un texte — pas de carte, pas d'ombre. La hiérarchie vient de la
+     typographie et de l'espace. Un repère latéral apparaît au survol :
+     c'est l'ombre du filet, pas une ombre portée. */
   .rows { border-top: 1px solid var(--hairline); }
 
   .row {
+    position: relative;
     display: grid;
     grid-template-columns: minmax(160px, 260px) 1fr;
     gap: clamp(16px, 3vw, 48px);
     padding-block: clamp(26px, 4vh, 42px);
+    padding-left: 18px;
     border-bottom: 1px solid var(--hairline);
+  }
+
+  .row::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: clamp(26px, 4vh, 42px);
+    bottom: clamp(26px, 4vh, 42px);
+    width: 2px;
+    background: var(--turquoise);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s var(--entree);
+  }
+
+  .row:hover::before,
+  .row:focus-within::before {
+    transform: scaleY(1);
   }
 
   .row h2 {
@@ -153,10 +196,11 @@
   }
 
   .section-title {
-    font-weight: 600;
-    font-size: clamp(1.4rem, 2vw, 1.85rem);
-    letter-spacing: -0.02em;
-    margin-bottom: clamp(20px, 3vh, 30px);
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(1.35rem, 2vw, 1.75rem);
+    letter-spacing: -0.01em;
+    margin-bottom: clamp(24px, 3.5vh, 34px);
   }
 
   /* Le filet passe du turquoise au violet : une touche du second accent
@@ -171,18 +215,260 @@
     background: linear-gradient(90deg, var(--turquoise), var(--violet));
   }
 
+  /* ---- État des projets --------------------------------------------------
+     Grille de cartes plutôt que des filets : ce bloc réunit des chantiers
+     de nature très différente (site, appli, série vidéo), la carte donne à
+     chacun le même poids visuel. Filet latéral turquoise/violet en
+     alternance stricte par colonne — le seul endroit du site où les deux
+     accents sont à parts égales, pas turquoise dominant. */
+  .projets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: clamp(18px, 2.5vw, 26px);
+  }
+
+  .projet-card {
+    position: relative;
+    background: var(--relief);
+    border: 1px solid var(--hairline);
+    border-radius: 18px;
+    padding: clamp(22px, 3vw, 28px);
+  }
+
+  .projet-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 18px;
+    bottom: 18px;
+    width: 3px;
+    border-radius: 3px;
+    background: var(--accent);
+  }
+
+  .projet-card:nth-child(odd) { --accent: var(--turquoise); }
+  .projet-card:nth-child(even) { --accent: var(--violet); }
+
+  .projet-card__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px 14px;
+  }
+
+  .projet-card h2 {
+    font-weight: 600;
+    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+    letter-spacing: -0.01em;
+  }
+
+  .projet-card .status {
+    margin-top: 2px;
+    flex-shrink: 0;
+    font-size: 0.72rem;
+    padding: 4px 12px;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 4px 11px;
+    border-radius: 999px;
+    background: rgba(64, 224, 208, 0.12);
+    color: var(--turquoise);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .projet-card p {
+    margin-top: 14px;
+    color: var(--mist);
+    font-size: 0.94rem;
+    max-width: 46ch;
+  }
+
+  /* ---- Preuve visuelle des réalisations ---------------------------------
+     Un aperçu encadré façon écran de téléphone plutôt qu'un bloc de texte :
+     ce que le studio livre se regarde, pas seulement se décrit. */
+  .proof-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: clamp(28px, 4vw, 40px);
+  }
+
+  .proof-card h2 {
+    margin-top: clamp(18px, 2.4vh, 24px);
+    font-weight: 600;
+    font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+    letter-spacing: -0.01em;
+  }
+
+  .proof-card p {
+    margin-top: 6px;
+    color: var(--mist);
+    font-size: 0.94rem;
+    max-width: 38ch;
+  }
+
+  .proof-frame {
+    position: relative;
+    aspect-ratio: 2 / 3;
+    border-radius: 26px;
+    overflow: hidden;
+    background: var(--relief);
+    border: 1px solid var(--hairline);
+    box-shadow: 0 30px 60px -34px rgba(0, 0, 0, 0.7);
+    transition: transform 0.35s var(--entree), box-shadow 0.35s ease;
+  }
+
+  .proof-card:hover .proof-frame,
+  .proof-card:focus-within .proof-frame {
+    transform: translateY(-6px);
+    box-shadow: 0 40px 70px -30px rgba(0, 0, 0, 0.75);
+  }
+
+  /* Anneau en dégradé, invisible au repos : le même motif que le titre,
+     réservé à un second usage plutôt que dispersé partout. */
+  .proof-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: linear-gradient(135deg, var(--turquoise), var(--violet));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+
+  .proof-card:hover .proof-frame::after,
+  .proof-card:focus-within .proof-frame::after {
+    opacity: 1;
+  }
+
+  .proof-frame .notch {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 46px;
+    height: 5px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.16);
+    z-index: 3;
+  }
+
+  .proof-frame img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    transition: transform 0.5s var(--entree);
+  }
+
+  .proof-card:hover .proof-frame img,
+  .proof-card:focus-within .proof-frame img {
+    transform: scale(1.045);
+  }
+
+  /* Mockup de Look and Find : recréé aux couleurs réelles de l'application
+     (pas une capture — l'app n'a pas encore d'écran de démo installable),
+     un viseur avec ses coins de cadrage plutôt qu'une simple photo produit. */
+  .mock-scan {
+    position: absolute;
+    inset: 0;
+    background: #0b0d10;
+    transition: transform 0.5s var(--entree);
+  }
+
+  .proof-card:hover .mock-scan,
+  .proof-card:focus-within .mock-scan {
+    transform: scale(1.045);
+  }
+
+  .mock-scan__viseur {
+    position: absolute;
+    inset: 20% 14% 34% 14%;
+  }
+
+  .mock-scan__coin {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-color: #7c5cff;
+    border-style: solid;
+    border-width: 0;
+  }
+
+  .mock-scan__coin:nth-child(1) { top: 0; left: 0; border-top-width: 3px; border-left-width: 3px; border-radius: 6px 0 0 0; }
+  .mock-scan__coin:nth-child(2) { top: 0; right: 0; border-top-width: 3px; border-right-width: 3px; border-radius: 0 6px 0 0; }
+  .mock-scan__coin:nth-child(3) { bottom: 0; left: 0; border-bottom-width: 3px; border-left-width: 3px; border-radius: 0 0 0 6px; }
+  .mock-scan__coin:nth-child(4) { bottom: 0; right: 0; border-bottom-width: 3px; border-right-width: 3px; border-radius: 0 0 6px 0; }
+
+  .mock-scan__silhouette {
+    position: absolute;
+    inset: 30% 30% 30% 30%;
+    border-radius: 16px;
+    background: linear-gradient(160deg, rgba(124, 92, 255, 0.32), rgba(47, 209, 119, 0.14));
+  }
+
+  .mock-scan__sheet {
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    bottom: 8%;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: #14181d;
+    border: 1px solid #2c333d;
+  }
+
+  .mock-scan__objet {
+    font-family: var(--corps);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #f2f4f7;
+  }
+
+  .mock-scan__prix {
+    margin-top: 8px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .mock-scan__prix span {
+    font-size: 0.64rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 999px;
+    color: #98a2b3;
+    border: 1px solid #2c333d;
+  }
+
+  .mock-scan__prix span.meilleur {
+    color: #0b0d10;
+    background: #2fd177;
+    border-color: #2fd177;
+  }
+
   /* Étiquette d'état, volontairement sans lien : tant que la fiche Play
      Store n'existe pas, mieux vaut le dire clairement qu'ajouter un lien
-     mort ou une icône provisoire. Teintée de violet plutôt que d'un gris
-     neutre : c'est la touche du second accent sur un élément qui n'a pas
-     besoin d'un survol pour se montrer. */
+     mort ou une icône provisoire. */
   .status {
     display: inline-block;
     margin-top: 10px;
     padding: 5px 14px;
-    border: 1px solid rgba(141, 123, 243, 0.45);
+    border: 1px solid rgba(124, 58, 237, 0.5);
     border-radius: 999px;
-    color: #c9bdfa;
+    color: #d4c6fb;
     font-size: 0.82rem;
     font-weight: 500;
     letter-spacing: -0.005em;
@@ -202,10 +488,12 @@
   }
 
   .cta h2 {
+    font-family: var(--display);
     font-weight: 800;
-    font-size: clamp(1.9rem, 3.1vw, 2.7rem);
-    letter-spacing: -0.03em;
-    max-width: 16ch;
+    font-size: clamp(1.85rem, 3.1vw, 2.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    max-width: 15ch;
   }
 
   .cta p {
@@ -215,15 +503,24 @@
     max-width: 42ch;
   }
 
-  .btn {
+  .cta-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
     flex-shrink: 0;
+  }
+
+  .btn {
+    position: relative;
+    overflow: hidden;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     min-height: 50px;
     background: var(--turquoise);
     color: #05201c;
-    font-family: var(--display);
+    font-family: var(--corps);
     font-weight: 600;
     font-size: clamp(0.95rem, 1vw, 1.04rem);
     padding: 13px 32px;
@@ -233,12 +530,46 @@
                 box-shadow 0.22s ease;
   }
 
+  /* Un reflet qui traverse le bouton au survol : le seul geste ajouté sur
+     l'action la plus importante de la page. */
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.45) 48%, transparent 66%);
+    transform: translateX(-120%);
+  }
+
+  .btn:hover::before {
+    transform: translateX(120%);
+    transition: transform 0.6s var(--entree);
+  }
+
   /* La seule touche de violet vraiment interactive de la page : elle se
      mêle au turquoise dans l'ombre du bouton, sans jamais dominer. */
   .btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 20px 40px -16px rgba(141, 123, 243, 0.35),
-                0 12px 26px -14px rgba(47, 226, 200, 0.6);
+    box-shadow: 0 20px 40px -16px rgba(124, 58, 237, 0.35),
+                0 12px 26px -14px rgba(64, 224, 208, 0.6);
+  }
+
+  .btn:active {
+    transform: translateY(0);
+  }
+
+  .btn-ghost {
+    color: var(--mist);
+    font-size: 0.95rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--hairline);
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  }
+
+  .btn-ghost:hover,
+  .btn-ghost:focus-visible {
+    color: var(--turquoise);
+    text-decoration-color: var(--turquoise);
   }
 
   :focus-visible {
@@ -255,20 +586,39 @@
     font-size: 0.88rem;
   }
 
+  footer a {
+    color: var(--mist);
+    transition: color 0.2s ease;
+  }
+
+  footer a:hover,
+  footer a:focus-visible {
+    color: var(--turquoise);
+  }
+
+  footer .courriel {
+    margin-top: 6px;
+  }
+
   /* ---- Adaptations ---------------------------------------------------- */
   @media (max-width: 640px) {
     .row { grid-template-columns: 1fr; gap: 8px; }
     .row p { max-width: none; }
     .cta { flex-direction: column; align-items: stretch; }
     .cta h2, .cta p { max-width: none; }
+    .cta-actions { width: 100%; }
     .btn { width: 100%; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     body::before { animation: none; }
     html.js .reveal { opacity: 1; transform: none; transition: none; }
-    .btn { transition: none; }
+    .btn, .row::before, .proof-frame, .proof-frame img, .mock-scan { transition: none; }
     .btn:hover { transform: none; }
+    .btn::before { display: none; }
+    .proof-card:hover .proof-frame { transform: none; }
+    .proof-card:hover .proof-frame img,
+    .proof-card:hover .mock-scan { transform: none; }
   }
 </style>
 <script>
@@ -286,11 +636,63 @@
 <main class="shell">
 
   <header class="hero reveal" style="--i:0">
-    <h1>Lefouzebreizh Studio</h1>
+    <h1 class="grad-text">Lefouzebreizh Studio</h1>
     <p class="lede">Sites internet et applications sur mesure, conçus avec âme — à Rennes et partout ailleurs.</p>
   </header>
 
-  <section class="rows reveal" style="--i:1" aria-label="Prestations">
+  <section class="reveal" style="--i:1">
+    <h3 class="section-title grad-text">Ce que je construis</h3>
+    <div class="projets-grid" aria-label="Projets en cours">
+
+      <article class="projet-card">
+        <div class="projet-card__head">
+          <h2>Ensemble face aux démarches</h2>
+          <span class="status">Itération</span>
+        </div>
+        <span class="eyebrow">Copilote démarches admin</span>
+        <p>Un site qui accompagne pas à pas les personnes perdues face à leurs démarches administratives — né d'un vécu personnel. MDPH pour commencer, conflit employeur ensuite, avec l'ambition de couvrir bien plus large.</p>
+      </article>
+
+      <article class="projet-card">
+        <div class="projet-card__head">
+          <h2>Mon Tiroir Secret</h2>
+          <span class="status">En durcissement</span>
+        </div>
+        <span class="eyebrow">Coffre documentaire chiffré</span>
+        <p>Une alternative française au cloud grand public : un coffre-fort numérique multi-utilisateur qui chiffre les documents sensibles et détecte tout seul les échéances à venir.</p>
+      </article>
+
+      <article class="projet-card">
+        <div class="projet-card__head">
+          <h2>Artisan Express</h2>
+          <span class="status">En prod</span>
+        </div>
+        <span class="eyebrow">Sites vitrine pour artisans</span>
+        <p>Un site vitrine professionnel livré en 48h, à prix fixe, sans agence ni blabla, pour les artisans locaux qui n'ont pas de site web. Activité déjà lancée officiellement.</p>
+      </article>
+
+      <article class="projet-card">
+        <div class="projet-card__head">
+          <h2>Aznaroth</h2>
+          <span class="status">Itération</span>
+        </div>
+        <span class="eyebrow">Série TikTok · mythologie</span>
+        <p>Un univers narratif original autour de créatures et de mythologie druidique, pensé pour les réseaux sociaux — écriture, image et montage.</p>
+      </article>
+
+      <article class="projet-card">
+        <div class="projet-card__head">
+          <h2>Look and Find</h2>
+          <span class="status">V1 en cours</span>
+        </div>
+        <span class="eyebrow">Identification par caméra</span>
+        <p>Une application mobile qui identifie un objet à partir d'une photo et en sort une fiche complète. Trois versions prévues : fiche objet, comparateur de prix, assistance à distance.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="rows reveal" style="--i:2" aria-label="Prestations">
     <article class="row">
       <h2>Site internet sur mesure</h2>
       <p>Une vitrine claire, rapide et efficace pour présenter votre activité, quel que soit votre métier. Conçue pour convertir, pas juste pour faire joli.</p>
@@ -301,26 +703,58 @@
     </article>
   </section>
 
-  <section class="reveal" style="--i:2">
-    <h3 class="section-title">Réalisations</h3>
-    <div class="rows" aria-label="Réalisations">
-      <article class="row">
+  <section class="reveal" style="--i:3">
+    <h3 class="section-title grad-text">Réalisations</h3>
+    <div class="proof-grid" aria-label="Réalisations">
+
+      <article class="proof-card">
+        <div class="proof-frame">
+          <span class="notch"></span>
+          <img src="assets/realisations/artisan-express.png" alt="Page d'accueil du site de démonstration Artisan Express, sur mobile" loading="lazy" width="430" height="900">
+        </div>
         <h2>Artisan Express</h2>
         <p>Sites vitrines à prix fixe pour les artisans locaux, en ligne rapidement.</p>
       </article>
-      <article class="row">
+
+      <article class="proof-card">
+        <div class="proof-frame">
+          <span class="notch"></span>
+          <img src="assets/realisations/le-coffre.png" alt="Écran de connexion de l'application Mon Tiroir Secret, sur mobile" loading="lazy" width="480" height="780">
+        </div>
+        <h2>Mon Tiroir Secret</h2>
+        <p>Coffre-fort numérique chiffré multi-utilisateurs avec détection automatique des échéances.</p>
+      </article>
+
+      <article class="proof-card">
+        <div class="proof-frame">
+          <span class="notch"></span>
+          <div class="mock-scan" role="img" aria-label="Aperçu du viseur de l'application Look and Find, identifiant un objet et comparant son prix">
+            <div class="mock-scan__viseur">
+              <span class="mock-scan__coin"></span>
+              <span class="mock-scan__coin"></span>
+              <span class="mock-scan__coin"></span>
+              <span class="mock-scan__coin"></span>
+              <span class="mock-scan__silhouette"></span>
+            </div>
+            <div class="mock-scan__sheet">
+              <p class="mock-scan__objet">Casque audio — reconnu</p>
+              <div class="mock-scan__prix">
+                <span>Amazon 89 €</span>
+                <span>Fnac 94 €</span>
+                <span class="meilleur">Boulanger 82 €</span>
+              </div>
+            </div>
+          </div>
+        </div>
         <h2>Look and Find</h2>
         <p>Application mobile d'identification d'objets par la caméra, avec comparateur de prix.</p>
       </article>
-      <article class="row">
-        <h2>Le Coffre</h2>
-        <p>Coffre-fort numérique chiffré multi-utilisateurs avec détection automatique des échéances.</p>
-      </article>
+
     </div>
   </section>
 
-  <section class="reveal" style="--i:3">
-    <h3 class="section-title">Mes applications</h3>
+  <section class="reveal" style="--i:4">
+    <h3 class="section-title grad-text">Mes applications</h3>
     <div class="rows" aria-label="Applications">
       <article class="row">
         <h2>Look and Find</h2>
@@ -332,16 +766,20 @@
     </div>
   </section>
 
-  <section class="cta reveal" style="--i:4">
+  <section class="cta reveal" style="--i:5">
     <div>
-      <h2>Une idée de site ou d'application ?</h2>
-      <p>Parlons-en directement, sans jargon ni promesses en l'air.</p>
+      <h2 class="grad-text">Une idée de site ou d'application ?</h2>
+      <p>Racontez-moi votre projet, sans jargon ni promesses en l'air — je réponds sous 48h.</p>
     </div>
-    <a class="btn" href="https://www.facebook.com/profile.php?id=61551926225174" target="_blank" rel="noopener">Nous contacter sur Facebook</a>
+    <div class="cta-actions">
+      <a class="btn" href="mailto:erwannchevallier@protonmail.com?subject=Mon%20projet%20de%20site%20ou%20d%27application">Discutons de mon projet</a>
+      <a class="btn-ghost" href="https://www.facebook.com/profile.php?id=61551926225174" target="_blank" rel="noopener">ou retrouvez-moi sur Facebook</a>
+    </div>
   </section>
 
-  <footer class="reveal" style="--i:5">
-    © 2026 Lefouzebreizh Studio — Rennes, France
+  <footer class="reveal" style="--i:6">
+    <p>© 2026 Lefouzebreizh Studio — Rennes, France</p>
+    <p class="courriel"><a href="mailto:erwannchevallier@protonmail.com">erwannchevallier@protonmail.com</a></p>
   </footer>
 
 </main>
