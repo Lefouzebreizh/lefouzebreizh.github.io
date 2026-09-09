@@ -64,7 +64,7 @@
   .shell {
     position: relative;
     z-index: 1;
-    max-width: 1040px;
+    max-width: 1360px;
     margin-inline: auto;
     padding: 0 clamp(24px, 5vw, 64px);
   }
@@ -223,8 +223,12 @@
      accents sont à parts égales, pas turquoise dominant. */
   .projets-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    grid-template-columns: 1fr;
     gap: clamp(18px, 2.5vw, 26px);
+  }
+
+  @media (min-width: 640px) {
+    .projets-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   .projet-card {
