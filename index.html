@@ -231,6 +231,10 @@
     .projets-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
+  @media (min-width: 1000px) {
+    .projets-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
   .projet-card {
     position: relative;
     background: var(--relief);
@@ -513,11 +517,20 @@
 
       <article class="projet-card">
         <div class="projet-card__head">
-          <h2>Look and Find</h2>
+          <h2>Look &amp; Find</h2>
           <span class="status">V1 en cours</span>
         </div>
-        <span class="eyebrow">Identification par caméra</span>
-        <p>Une application mobile qui identifie un objet à partir d'une photo et en sort une fiche complète. Trois versions prévues : fiche objet, comparateur de prix, assistance à distance.</p>
+        <span class="eyebrow">Description d'objet par caméra</span>
+        <p>Une application Flutter qui décrit un objet visé à la caméra — nom, catégorie, usage, matière — sans jamais inventer de marque ou de référence exacte. Sa couleur, elle, n'est pas devinée par un modèle : mesurée sur l'appareil, elle marche hors ligne et ne coûte rien.</p>
+      </article>
+
+      <article class="projet-card">
+        <div class="projet-card__head">
+          <h2>Accord</h2>
+          <span class="status">Prototype</span>
+        </div>
+        <span class="eyebrow">L'éveil des couleurs</span>
+        <p>Un module distinct de la même base que Look &amp; Find : là où l'un décrit ce qu'est un objet, Accord propose ce qui s'accorde avec sa couleur — harmonies et idées déco. Encore en attente de ses photos de référence.</p>
       </article>
 
     </div>
@@ -538,9 +551,9 @@
     <h3 class="section-title grad-text">Mes applications</h3>
     <div class="rows" aria-label="Applications">
       <article class="row">
-        <h2>Look and Find</h2>
+        <h2>Look &amp; Find</h2>
         <div>
-          <p>Application mobile d'identification d'objets par la caméra, avec comparateur de prix.</p>
+          <p>Application mobile qui décrit un objet visé à la caméra — nom, usage, matière, couleur mesurée sur l'appareil.</p>
           <span class="status">Bientôt disponible</span>
         </div>
       </article>
