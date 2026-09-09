@@ -53,12 +53,18 @@
       radial-gradient(46% 42% at 18% 16%, rgba(64, 224, 208, 0.17), transparent 72%),
       radial-gradient(40% 38% at 88% 78%, rgba(64, 224, 208, 0.08), transparent 70%),
       radial-gradient(38% 32% at 82% 10%, rgba(124, 58, 237, 0.32), transparent 72%);
-    animation: derive 54s ease-in-out infinite alternate;
+    animation: derive 90s ease-in-out infinite;
   }
 
+  /* Boucle fermée (0% = 100%) plutôt qu'un aller-retour à deux points :
+     la dérive ne repasse jamais deux fois par le même chemin, ce qui lit
+     comme une aurore plutôt qu'un balancier. */
   @keyframes derive {
-    from { transform: translate3d(-2%, -1%, 0) scale(1); }
-    to   { transform: translate3d(2%, 1.5%, 0) scale(1.08); }
+    0%   { transform: translate3d(-2%, -1%, 0) scale(1); }
+    25%  { transform: translate3d(1.5%, -2%, 0) scale(1.05); }
+    50%  { transform: translate3d(2%, 1.5%, 0) scale(1.08); }
+    75%  { transform: translate3d(-1%, 2%, 0) scale(1.03); }
+    100% { transform: translate3d(-2%, -1%, 0) scale(1); }
   }
 
   .shell {
@@ -90,13 +96,34 @@
       -webkit-text-fill-color: transparent;
       color: transparent;
     }
+
+    /* Reflet métallique, une seule fois au chargement : une seconde
+       couche de fond — presque tout transparente, une bande claire —
+       balayée par-dessus le dégradé de couleur qui reste, lui, immobile. */
+    .hero h1.grad-text {
+      background-image:
+        linear-gradient(100deg, transparent 0%, rgba(255, 255, 255, 0.8) 48%, transparent 58%),
+        linear-gradient(100deg, var(--turquoise) 0%, var(--turquoise) 35%, var(--violet) 100%);
+      background-size: 250% 100%, 100% 100%;
+      background-position: -250% 0, 0 0;
+      background-repeat: no-repeat;
+      animation: reflet 2.2s ease-in-out 1;
+      animation-delay: 0.9s;
+      animation-fill-mode: forwards;
+    }
+  }
+
+  @keyframes reflet {
+    to { background-position: 250% 0, 0 0; }
   }
 
   @media (forced-colors: active) {
-    .grad-text {
+    .grad-text,
+    .hero h1.grad-text {
       background-image: none;
       -webkit-text-fill-color: currentColor;
       color: CanvasText;
+      animation: none;
     }
   }
 
@@ -241,6 +268,9 @@
     border: 1px solid var(--hairline);
     border-radius: 18px;
     padding: clamp(22px, 3vw, 28px);
+    transition: transform 0.3s var(--entree),
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
   }
 
   .projet-card::before {
@@ -254,8 +284,19 @@
     background: var(--accent);
   }
 
-  .projet-card:nth-child(odd) { --accent: var(--turquoise); }
-  .projet-card:nth-child(even) { --accent: var(--violet); }
+  .projet-card:nth-child(odd) { --accent: var(--turquoise); --accent-glow: rgba(64, 224, 208, 0.4); }
+  .projet-card:nth-child(even) { --accent: var(--violet); --accent-glow: rgba(124, 58, 237, 0.4); }
+
+  /* Profondeur au survol : la bordure reprend l'accent de la carte
+     plutôt qu'une couleur neutre, pour que chaque carte s'allume dans
+     sa propre teinte. */
+  .projet-card:hover,
+  .projet-card:focus-within {
+    transform: translateY(-6px);
+    border-color: var(--accent);
+    box-shadow: 0 28px 52px -28px rgba(0, 0, 0, 0.7),
+                0 0 32px -6px var(--accent-glow);
+  }
 
   .projet-card__head {
     display: flex;
@@ -451,9 +492,12 @@
   @media (prefers-reduced-motion: reduce) {
     body::before { animation: none; }
     html.js .reveal { opacity: 1; transform: none; transition: none; }
-    .btn, .row::before { transition: none; }
+    .btn, .row::before, .projet-card { transition: none; }
     .btn:hover { transform: none; }
     .btn::before { display: none; }
+    .projet-card:hover,
+    .projet-card:focus-within { transform: none; }
+    .hero h1.grad-text { animation: none; }
   }
 </style>
 <script>
@@ -475,11 +519,11 @@
     <p class="lede">Sites internet et applications sur mesure, conçus avec âme — à Rennes et partout ailleurs.</p>
   </header>
 
-  <section class="reveal" style="--i:1">
-    <h3 class="section-title grad-text">Ce que je construis</h3>
+  <section>
+    <h3 class="section-title grad-text reveal" style="--i:0">Ce que je construis</h3>
     <div class="projets-grid" aria-label="Projets en cours">
 
-      <article class="projet-card">
+      <article class="projet-card reveal" style="--i:1">
         <div class="projet-card__head">
           <h2>Ensemble face aux démarches</h2>
           <span class="status">Itération</span>
@@ -488,7 +532,7 @@
         <p>Un site qui accompagne pas à pas les personnes perdues face à leurs démarches administratives — né d'un vécu personnel. MDPH pour commencer, conflit employeur ensuite, avec l'ambition de couvrir bien plus large.</p>
       </article>
 
-      <article class="projet-card">
+      <article class="projet-card reveal" style="--i:2">
         <div class="projet-card__head">
           <h2>Mon Tiroir Secret</h2>
           <span class="status">En durcissement</span>
@@ -497,7 +541,7 @@
         <p>Une alternative française au cloud grand public : un coffre-fort numérique multi-utilisateur qui chiffre les documents sensibles et détecte tout seul les échéances à venir.</p>
       </article>
 
-      <article class="projet-card">
+      <article class="projet-card reveal" style="--i:3">
         <div class="projet-card__head">
           <h2>Artisan Express</h2>
           <span class="status">En prod</span>
@@ -506,7 +550,7 @@
         <p>Un site vitrine professionnel livré en 48h, à prix fixe, sans agence ni blabla, pour les artisans locaux qui n'ont pas de site web. Activité déjà lancée officiellement.</p>
       </article>
 
-      <article class="projet-card">
+      <article class="projet-card reveal" style="--i:4">
         <div class="projet-card__head">
           <h2>Aznaroth</h2>
           <span class="status">Itération</span>
@@ -515,7 +559,7 @@
         <p>Un univers narratif original autour de créatures et de mythologie druidique, pensé pour les réseaux sociaux — écriture, image et montage.</p>
       </article>
 
-      <article class="projet-card">
+      <article class="projet-card reveal" style="--i:5">
         <div class="projet-card__head">
           <h2>Look &amp; Find</h2>
           <span class="status">V1 en cours</span>
@@ -524,7 +568,7 @@
         <p>Une application Flutter qui décrit un objet visé à la caméra — nom, catégorie, usage, matière — sans jamais inventer de marque ou de référence exacte. Sa couleur, elle, n'est pas devinée par un modèle : mesurée sur l'appareil, elle marche hors ligne et ne coûte rien.</p>
       </article>
 
-      <article class="projet-card">
+      <article class="projet-card reveal" style="--i:6">
         <div class="projet-card__head">
           <h2>Accord</h2>
           <span class="status">Prototype</span>
