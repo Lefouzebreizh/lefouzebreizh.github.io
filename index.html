@@ -289,176 +289,6 @@
     max-width: 46ch;
   }
 
-  /* ---- Preuve visuelle des réalisations ---------------------------------
-     Un aperçu encadré façon écran de téléphone plutôt qu'un bloc de texte :
-     ce que le studio livre se regarde, pas seulement se décrit. */
-  .proof-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: clamp(28px, 4vw, 40px);
-  }
-
-  .proof-card h2 {
-    margin-top: clamp(18px, 2.4vh, 24px);
-    font-weight: 600;
-    font-size: clamp(1.05rem, 1.3vw, 1.2rem);
-    letter-spacing: -0.01em;
-  }
-
-  .proof-card p {
-    margin-top: 6px;
-    color: var(--mist);
-    font-size: 0.94rem;
-    max-width: 38ch;
-  }
-
-  .proof-frame {
-    position: relative;
-    aspect-ratio: 2 / 3;
-    border-radius: 26px;
-    overflow: hidden;
-    background: var(--relief);
-    border: 1px solid var(--hairline);
-    box-shadow: 0 30px 60px -34px rgba(0, 0, 0, 0.7);
-    transition: transform 0.35s var(--entree), box-shadow 0.35s ease;
-  }
-
-  .proof-card:hover .proof-frame,
-  .proof-card:focus-within .proof-frame {
-    transform: translateY(-6px);
-    box-shadow: 0 40px 70px -30px rgba(0, 0, 0, 0.75);
-  }
-
-  /* Anneau en dégradé, invisible au repos : le même motif que le titre,
-     réservé à un second usage plutôt que dispersé partout. */
-  .proof-frame::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1.5px;
-    background: linear-gradient(135deg, var(--turquoise), var(--violet));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity 0.35s ease;
-    pointer-events: none;
-  }
-
-  .proof-card:hover .proof-frame::after,
-  .proof-card:focus-within .proof-frame::after {
-    opacity: 1;
-  }
-
-  .proof-frame .notch {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 46px;
-    height: 5px;
-    border-radius: 3px;
-    background: rgba(255, 255, 255, 0.16);
-    z-index: 3;
-  }
-
-  .proof-frame img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
-    transition: transform 0.5s var(--entree);
-  }
-
-  .proof-card:hover .proof-frame img,
-  .proof-card:focus-within .proof-frame img {
-    transform: scale(1.045);
-  }
-
-  /* Mockup de Look and Find : recréé aux couleurs réelles de l'application
-     (pas une capture — l'app n'a pas encore d'écran de démo installable),
-     un viseur avec ses coins de cadrage plutôt qu'une simple photo produit. */
-  .mock-scan {
-    position: absolute;
-    inset: 0;
-    background: #0b0d10;
-    transition: transform 0.5s var(--entree);
-  }
-
-  .proof-card:hover .mock-scan,
-  .proof-card:focus-within .mock-scan {
-    transform: scale(1.045);
-  }
-
-  .mock-scan__viseur {
-    position: absolute;
-    inset: 20% 14% 34% 14%;
-  }
-
-  .mock-scan__coin {
-    position: absolute;
-    width: 22px;
-    height: 22px;
-    border-color: #7c5cff;
-    border-style: solid;
-    border-width: 0;
-  }
-
-  .mock-scan__coin:nth-child(1) { top: 0; left: 0; border-top-width: 3px; border-left-width: 3px; border-radius: 6px 0 0 0; }
-  .mock-scan__coin:nth-child(2) { top: 0; right: 0; border-top-width: 3px; border-right-width: 3px; border-radius: 0 6px 0 0; }
-  .mock-scan__coin:nth-child(3) { bottom: 0; left: 0; border-bottom-width: 3px; border-left-width: 3px; border-radius: 0 0 0 6px; }
-  .mock-scan__coin:nth-child(4) { bottom: 0; right: 0; border-bottom-width: 3px; border-right-width: 3px; border-radius: 0 0 6px 0; }
-
-  .mock-scan__silhouette {
-    position: absolute;
-    inset: 30% 30% 30% 30%;
-    border-radius: 16px;
-    background: linear-gradient(160deg, rgba(124, 92, 255, 0.32), rgba(47, 209, 119, 0.14));
-  }
-
-  .mock-scan__sheet {
-    position: absolute;
-    left: 8%;
-    right: 8%;
-    bottom: 8%;
-    padding: 12px 14px;
-    border-radius: 14px;
-    background: #14181d;
-    border: 1px solid #2c333d;
-  }
-
-  .mock-scan__objet {
-    font-family: var(--corps);
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: #f2f4f7;
-  }
-
-  .mock-scan__prix {
-    margin-top: 8px;
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-
-  .mock-scan__prix span {
-    font-size: 0.64rem;
-    font-weight: 600;
-    padding: 3px 8px;
-    border-radius: 999px;
-    color: #98a2b3;
-    border: 1px solid #2c333d;
-  }
-
-  .mock-scan__prix span.meilleur {
-    color: #0b0d10;
-    background: #2fd177;
-    border-color: #2fd177;
-  }
-
   /* Étiquette d'état, volontairement sans lien : tant que la fiche Play
      Store n'existe pas, mieux vaut le dire clairement qu'ajouter un lien
      mort ou une icône provisoire. */
@@ -613,12 +443,9 @@
   @media (prefers-reduced-motion: reduce) {
     body::before { animation: none; }
     html.js .reveal { opacity: 1; transform: none; transition: none; }
-    .btn, .row::before, .proof-frame, .proof-frame img, .mock-scan { transition: none; }
+    .btn, .row::before { transition: none; }
     .btn:hover { transform: none; }
     .btn::before { display: none; }
-    .proof-card:hover .proof-frame { transform: none; }
-    .proof-card:hover .proof-frame img,
-    .proof-card:hover .mock-scan { transform: none; }
   }
 </style>
 <script>
@@ -704,56 +531,6 @@
   </section>
 
   <section class="reveal" style="--i:3">
-    <h3 class="section-title grad-text">Réalisations</h3>
-    <div class="proof-grid" aria-label="Réalisations">
-
-      <article class="proof-card">
-        <div class="proof-frame">
-          <span class="notch"></span>
-          <img src="assets/realisations/artisan-express.png" alt="Page d'accueil du site de démonstration Artisan Express, sur mobile" loading="lazy" width="430" height="900">
-        </div>
-        <h2>Artisan Express</h2>
-        <p>Sites vitrines à prix fixe pour les artisans locaux, en ligne rapidement.</p>
-      </article>
-
-      <article class="proof-card">
-        <div class="proof-frame">
-          <span class="notch"></span>
-          <img src="assets/realisations/le-coffre.png" alt="Écran de connexion de l'application Mon Tiroir Secret, sur mobile" loading="lazy" width="480" height="780">
-        </div>
-        <h2>Mon Tiroir Secret</h2>
-        <p>Coffre-fort numérique chiffré multi-utilisateurs avec détection automatique des échéances.</p>
-      </article>
-
-      <article class="proof-card">
-        <div class="proof-frame">
-          <span class="notch"></span>
-          <div class="mock-scan" role="img" aria-label="Aperçu du viseur de l'application Look and Find, identifiant un objet et comparant son prix">
-            <div class="mock-scan__viseur">
-              <span class="mock-scan__coin"></span>
-              <span class="mock-scan__coin"></span>
-              <span class="mock-scan__coin"></span>
-              <span class="mock-scan__coin"></span>
-              <span class="mock-scan__silhouette"></span>
-            </div>
-            <div class="mock-scan__sheet">
-              <p class="mock-scan__objet">Casque audio — reconnu</p>
-              <div class="mock-scan__prix">
-                <span>Amazon 89 €</span>
-                <span>Fnac 94 €</span>
-                <span class="meilleur">Boulanger 82 €</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <h2>Look and Find</h2>
-        <p>Application mobile d'identification d'objets par la caméra, avec comparateur de prix.</p>
-      </article>
-
-    </div>
-  </section>
-
-  <section class="reveal" style="--i:4">
     <h3 class="section-title grad-text">Mes applications</h3>
     <div class="rows" aria-label="Applications">
       <article class="row">
@@ -766,7 +543,7 @@
     </div>
   </section>
 
-  <section class="cta reveal" style="--i:5">
+  <section class="cta reveal" style="--i:4">
     <div>
       <h2 class="grad-text">Une idée de site ou d'application ?</h2>
       <p>Racontez-moi votre projet, sans jargon ni promesses en l'air — je réponds sous 48h.</p>
@@ -777,7 +554,7 @@
     </div>
   </section>
 
-  <footer class="reveal" style="--i:6">
+  <footer class="reveal" style="--i:5">
     <p>© 2026 Lefouzebreizh Studio — Rennes, France</p>
     <p class="courriel"><a href="mailto:erwannchevallier@protonmail.com">erwannchevallier@protonmail.com</a></p>
   </footer>
