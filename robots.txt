@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Autorise l'apparition du site dans la recherche ChatGPT.
+User-agent: OAI-SearchBot
+Allow: /
+
+# Autorise les visites déclenchées par un utilisateur de ChatGPT.
+User-agent: ChatGPT-User
+Allow: /
+
+# La visibilité dans ChatGPT reste autorisée sans autoriser
+# l'utilisation du site pour l'entraînement des modèles.
+User-agent: GPTBot
+Disallow: /
+
+Sitemap: https://lefouzebreizh.github.io/sitemap.xml
