@@ -3,86 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lefouzèbreizh Studio — Sites et applications sur mesure</title>
-<meta name="description" content="Lefouzèbreizh Studio conçoit des sites internet et des applications sur mesure à Rennes et partout en France.">
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-<meta name="author" content="Erwann Chevallier">
-<meta name="theme-color" content="#0f1115">
-<link rel="canonical" href="https://lefouzebreizh.github.io/">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="fr_FR">
-<meta property="og:site_name" content="Lefouzèbreizh Studio">
-<meta property="og:title" content="Lefouzèbreizh Studio — Sites et applications sur mesure">
-<meta property="og:description" content="Des sites internet et des applications sur mesure, conçus à Rennes pour des besoins réels.">
-<meta property="og:url" content="https://lefouzebreizh.github.io/">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Lefouzèbreizh Studio — Sites et applications sur mesure">
-<meta name="twitter:description" content="Des sites internet et des applications sur mesure, conçus à Rennes pour des besoins réels.">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": "https://lefouzebreizh.github.io/#website",
-      "url": "https://lefouzebreizh.github.io/",
-      "name": "Lefouzèbreizh Studio",
-      "description": "Studio de création de sites internet et d'applications sur mesure.",
-      "inLanguage": "fr-FR",
-      "publisher": { "@id": "https://lefouzebreizh.github.io/#studio" }
-    },
-    {
-      "@type": "ProfessionalService",
-      "@id": "https://lefouzebreizh.github.io/#studio",
-      "name": "Lefouzèbreizh Studio",
-      "url": "https://lefouzebreizh.github.io/",
-      "email": "mailto:erwannchevallier@protonmail.com",
-      "description": "Conception de sites internet et d'applications sur mesure.",
-      "areaServed": {
-        "@type": "Country",
-        "name": "France"
-      },
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Rennes",
-        "addressCountry": "FR"
-      },
-      "sameAs": [
-        "https://www.facebook.com/profile.php?id=61551926225174"
-      ],
-      "founder": {
-        "@type": "Person",
-        "name": "Erwann Chevallier"
-      },
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Prestations numériques",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Site internet sur mesure",
-              "description": "Conception d'une vitrine claire et adaptée à l'activité du client."
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Application sur mesure",
-              "description": "Conception d'applications adaptées à un besoin réel."
-            }
-          }
-        ]
-      }
-    }
-  ]
-}
-</script>
+<title>Lefouzèbreizh Studio — Sites &amp; applications sur mesure</title>
+<meta name="description" content="Lefouzèbreizh Studio conçoit des sites internet et des applications mobiles sur mesure, à Rennes et partout ailleurs.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,800&family=Unbounded:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --text-gradient: linear-gradient(100deg,#40e0d0 0%,#68b5ff 32%,#65e4a0 64%,#bd91ff 100%);
@@ -95,14 +20,17 @@
     --mist: #9aa7ad;
     --hairline: rgba(255, 255, 255, 0.09);
 
-    --display: "Unbounded", "Segoe UI", system-ui, sans-serif;
-    --corps: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --display: "Playfair Display", Georgia, serif;
+    --corps: "Inter", "Segoe UI", system-ui, sans-serif;
     --entree: cubic-bezier(0.22, 0.7, 0.3, 1);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html { color-scheme: dark; }
+  html {
+    color-scheme: dark;
+    font-size: 18px;
+  }
 
   body {
     min-height: 100vh;
@@ -276,7 +204,7 @@
     transform: scaleY(1);
   }
 
-  .row h2 {
+  .row :is(h2, h3) {
     font-weight: 600;
     font-size: clamp(1.12rem, 1.5vw, 1.36rem);
     letter-spacing: -0.015em;
@@ -284,14 +212,14 @@
     transition: color 0.25s ease;
   }
 
-  .row:hover h2,
-  .row:focus-within h2 {
+  .row:hover :is(h2, h3),
+  .row:focus-within :is(h2, h3) {
     color: var(--turquoise);
   }
 
   .row p {
     color: var(--mist);
-    font-size: clamp(0.97rem, 1.05vw, 1.06rem);
+    font-size: clamp(1rem, 1.05vw, 1.06rem);
     max-width: 62ch;
   }
 
@@ -340,10 +268,21 @@
     background: var(--relief);
     border: 1px solid var(--hairline);
     border-radius: 18px;
-    padding: clamp(22px, 3vw, 28px);
     transition: transform 0.3s var(--entree),
                 box-shadow 0.3s ease,
                 border-color 0.3s ease;
+  }
+
+  .projet-card__inner,
+  .projet-card__link {
+    display: block;
+    height: 100%;
+    padding: clamp(22px, 3vw, 28px);
+  }
+
+  .projet-card__link {
+    color: inherit;
+    text-decoration: none;
   }
 
   .projet-card::before {
@@ -379,7 +318,7 @@
     gap: 10px 14px;
   }
 
-  .projet-card h2 {
+  .projet-card h3 {
     font-weight: 600;
     font-size: clamp(1.05rem, 1.4vw, 1.2rem);
     letter-spacing: -0.01em;
@@ -388,7 +327,7 @@
   .projet-card .status {
     margin-top: 2px;
     flex-shrink: 0;
-    font-size: 0.72rem;
+    font-size: 1rem;
     padding: 4px 12px;
   }
 
@@ -399,7 +338,7 @@
     border-radius: 999px;
     background: rgba(64, 224, 208, 0.12);
     color: var(--turquoise);
-    font-size: 0.68rem;
+    font-size: 1rem;
     font-weight: 600;
     letter-spacing: 0.01em;
   }
@@ -407,13 +346,22 @@
   .projet-card p {
     margin-top: 14px;
     color: var(--mist);
-    font-size: 0.94rem;
+    font-size: 1rem;
     max-width: 46ch;
   }
 
-  /* Étiquette d'état, volontairement sans lien : tant que la fiche Play
-     Store n'existe pas, mieux vaut le dire clairement qu'ajouter un lien
-     mort ou une icône provisoire. */
+  .projet-card__action {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 14px;
+    color: var(--turquoise);
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  /* Étiquette d'état. Une carte entière ne devient un lien que lorsque sa
+     destination publique a réellement été vérifiée. */
   .status {
     display: inline-block;
     margin-top: 10px;
@@ -421,7 +369,7 @@
     border: 1px solid rgba(124, 58, 237, 0.5);
     border-radius: 999px;
     color: #d4c6fb;
-    font-size: 0.82rem;
+    font-size: 1rem;
     font-weight: 500;
     letter-spacing: -0.005em;
   }
@@ -474,7 +422,7 @@
     color: #05201c;
     font-family: var(--corps);
     font-weight: 600;
-    font-size: clamp(0.95rem, 1vw, 1.04rem);
+    font-size: clamp(1rem, 1vw, 1.04rem);
     padding: 13px 32px;
     border-radius: 30px;
     text-decoration: none;
@@ -510,8 +458,11 @@
   }
 
   .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     color: var(--mist);
-    font-size: 0.95rem;
+    font-size: 1rem;
     text-decoration: underline;
     text-underline-offset: 3px;
     text-decoration-color: var(--hairline);
@@ -535,10 +486,13 @@
     padding-bottom: clamp(48px, 8vh, 96px);
     border-top: 1px solid var(--hairline);
     color: var(--mist);
-    font-size: 0.88rem;
+    font-size: 1rem;
   }
 
   footer a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     color: var(--mist);
     transition: color 0.2s ease;
   }
@@ -574,7 +528,7 @@
   }
 
   /* Extension de la palette à tous les textes, avec surfaces conservées. */
-  .projet-card .status, .eyebrow { font-size: .875rem; }
+  .projet-card .status, .status, .eyebrow { font-size: 1rem; }
   .hero h1 > span { display:inline-block; max-width:100%; }
   .section-title { width:fit-content; }
   @supports (background-clip: text) or (-webkit-background-clip: text) {
@@ -630,61 +584,75 @@
   </header>
 
   <section>
-    <h3 class="section-title grad-text reveal" style="--i:0">Ce que je construis</h3>
+    <h2 class="section-title grad-text reveal" style="--i:0">Ce que je construis</h2>
     <div class="projets-grid" aria-label="Projets en cours">
 
       <article class="projet-card reveal" style="--i:1">
-        <div class="projet-card__head">
-          <h2>Ensemble face aux démarches</h2>
-          <span class="status">Itération</span>
-        </div>
-        <span class="eyebrow">Copilote démarches admin</span>
-        <p>Un site qui accompagne pas à pas les personnes perdues face à leurs démarches administratives — né d'un vécu personnel. MDPH pour commencer, conflit employeur ensuite, avec l'ambition de couvrir bien plus large.</p>
+        <a class="projet-card__link" href="https://ensemble-mdph.vercel.app/" aria-label="Découvrir Ensemble face aux démarches">
+          <div class="projet-card__head">
+            <h3>Ensemble face aux démarches</h3>
+            <span class="status">En amélioration</span>
+          </div>
+          <span class="eyebrow">Aide aux démarches administratives</span>
+          <p>Un site qui accompagne pas à pas les personnes perdues face à leurs démarches administratives, à partir d'un vécu personnel. Il commence par la MDPH et s'élargira ensuite à d'autres situations.</p>
+          <span class="projet-card__action">Découvrir le site →</span>
+        </a>
       </article>
 
       <article class="projet-card reveal" style="--i:2">
-        <div class="projet-card__head">
-          <h2>Mon Tiroir Secret</h2>
-          <span class="status">En durcissement</span>
+        <div class="projet-card__inner">
+          <div class="projet-card__head">
+            <h3>Mon Tiroir Secret</h3>
+            <span class="status">Sécurisation en cours</span>
+          </div>
+          <span class="eyebrow">Documents protégés</span>
+          <p>Un espace numérique français où plusieurs personnes peuvent protéger leurs documents sensibles et suivre leurs prochaines échéances.</p>
         </div>
-        <span class="eyebrow">Coffre documentaire chiffré</span>
-        <p>Une alternative française au cloud grand public : un coffre-fort numérique multi-utilisateur qui chiffre les documents sensibles et détecte tout seul les échéances à venir.</p>
       </article>
 
       <article class="projet-card reveal" style="--i:3">
-        <div class="projet-card__head">
-          <h2>Artisan Express</h2>
-          <span class="status">En prod</span>
-        </div>
-        <span class="eyebrow">Sites vitrine pour artisans</span>
-        <p>Un site vitrine professionnel livré en 48h, à prix fixe, sans agence ni blabla, pour les artisans locaux qui n'ont pas de site web. Activité déjà lancée officiellement.</p>
+        <a class="projet-card__link" href="https://artisan-express-ashy.vercel.app/" aria-label="Découvrir Artisan Express">
+          <div class="projet-card__head">
+            <h3>Artisan Express</h3>
+            <span class="status">En ligne</span>
+          </div>
+          <span class="eyebrow">Sites vitrine pour artisans</span>
+          <p>Un site vitrine professionnel livré en 48 h, à prix fixe et sans abonnement, pour les artisans qui veulent présenter clairement leur activité.</p>
+          <span class="projet-card__action">Découvrir le site →</span>
+        </a>
       </article>
 
       <article class="projet-card reveal" style="--i:4">
-        <div class="projet-card__head">
-          <h2>Aznaroth</h2>
-          <span class="status">Itération</span>
+        <div class="projet-card__inner">
+          <div class="projet-card__head">
+            <h3>Aznaroth</h3>
+            <span class="status">En amélioration</span>
+          </div>
+          <span class="eyebrow">Série TikTok · mythologie</span>
+          <p>Un univers original de créatures et de mythologie druidique, pensé pour les réseaux sociaux à travers l'écriture, l'image et le montage.</p>
         </div>
-        <span class="eyebrow">Série TikTok · mythologie</span>
-        <p>Un univers narratif original autour de créatures et de mythologie druidique, pensé pour les réseaux sociaux — écriture, image et montage.</p>
       </article>
 
       <article class="projet-card reveal" style="--i:5">
-        <div class="projet-card__head">
-          <h2>Look &amp; Find</h2>
-          <span class="status">V1 en cours</span>
+        <div class="projet-card__inner">
+          <div class="projet-card__head">
+            <h3>Look &amp; Find</h3>
+            <span class="status">Première version</span>
+          </div>
+          <span class="eyebrow">Reconnaissance d'objet par caméra</span>
+          <p>Une application mobile qui décrit l'objet filmé : son nom, sa catégorie, son usage et sa matière, sans inventer de marque. Sa couleur est mesurée directement par le téléphone et fonctionne hors ligne.</p>
         </div>
-        <span class="eyebrow">Description d'objet par caméra</span>
-        <p>Une application Flutter qui décrit un objet visé à la caméra — nom, catégorie, usage, matière — sans jamais inventer de marque ou de référence exacte. Sa couleur, elle, n'est pas devinée par un modèle : mesurée sur l'appareil, elle marche hors ligne et ne coûte rien.</p>
       </article>
 
       <article class="projet-card reveal" style="--i:6">
-        <div class="projet-card__head">
-          <h2>Accord</h2>
-          <span class="status">Prototype</span>
+        <div class="projet-card__inner">
+          <div class="projet-card__head">
+            <h3>Accord</h3>
+            <span class="status">Prototype</span>
+          </div>
+          <span class="eyebrow">L'éveil des couleurs</span>
+          <p>Une application liée à Look &amp; Find qui propose des couleurs assorties et des idées de décoration. Elle attend encore ses photos de référence.</p>
         </div>
-        <span class="eyebrow">L'éveil des couleurs</span>
-        <p>Un module distinct de la même base que Look &amp; Find : là où l'un décrit ce qu'est un objet, Accord propose ce qui s'accorde avec sa couleur — harmonies et idées déco. Encore en attente de ses photos de référence.</p>
       </article>
 
     </div>
@@ -697,15 +665,15 @@
     </article>
     <article class="row">
       <h2>Application sur mesure</h2>
-      <p>Développement d'applications mobiles (Flutter) taillées pour votre besoin réel, du cahier des charges jusqu'au déploiement sur les stores.</p>
+      <p>Une application mobile conçue pour votre besoin réel, de la définition du projet jusqu'à sa mise en ligne sur les boutiques d'applications.</p>
     </article>
   </section>
 
   <section class="reveal" style="--i:3">
-    <h3 class="section-title grad-text">Mes applications</h3>
+    <h2 class="section-title grad-text">Mes applications</h2>
     <div class="rows" aria-label="Applications">
       <article class="row">
-        <h2>Look &amp; Find</h2>
+        <h3>Look &amp; Find</h3>
         <div>
           <p>Application mobile qui décrit un objet visé à la caméra — nom, usage, matière, couleur mesurée sur l'appareil.</p>
           <span class="status">Bientôt disponible</span>
@@ -717,7 +685,7 @@
   <section class="cta reveal" style="--i:4">
     <div>
       <h2 class="grad-text">Une idée de site ou d'application ?</h2>
-      <p>Racontez-moi votre projet, sans jargon ni promesses en l'air — je réponds sous 48h.</p>
+      <p>Racontez-moi votre projet, simplement et sans promesse en l'air — je réponds sous 48 h.</p>
     </div>
     <div class="cta-actions">
       <a class="btn" href="mailto:erwannchevallier@protonmail.com?subject=Mon%20projet%20de%20site%20ou%20d%27application">Discutons de mon projet</a>
