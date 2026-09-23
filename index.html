@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lefouzèbreizh Studio — Sites &amp; applications sur mesure</title>
-<meta name="description" content="Lefouzèbreizh Studio conçoit des sites internet et des applications mobiles sur mesure, à Rennes et partout ailleurs.">
+<title>Lefouzèbreizh Studio — Sites, audits et suivi pour professionnels</title>
+<meta name="description" content="Lefouzèbreizh Studio accompagne les professionnels avec Artisan Express, des audits de sites et un suivi sur demande, à Rennes et en Bretagne.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
@@ -167,6 +167,21 @@
     font-size: clamp(1.05rem, 1.4vw, 1.28rem);
     font-weight: 400;
     max-width: 44ch;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 24px;
+    margin-top: clamp(24px, 4vh, 36px);
+  }
+
+  .section-intro {
+    color: var(--mist);
+    font-size: clamp(1rem, 1.1vw, 1.1rem);
+    max-width: 68ch;
+    margin-bottom: clamp(22px, 3vh, 30px);
   }
 
   /* ---- Listes de lignes -------------------------------------------------
@@ -513,7 +528,7 @@
     .cta { flex-direction: column; align-items: stretch; }
     .cta h2, .cta p { max-width: none; }
     .cta-actions { width: 100%; }
-    .btn { width: 100%; }
+    .btn, .hero-actions .btn { width: 100%; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -527,30 +542,12 @@
     .hero h1.grad-text { animation: none; }
   }
 
-  /* Extension de la palette à tous les textes, avec surfaces conservées. */
-  .projet-card .status, .status, .eyebrow { font-size: 1rem; }
+  /* Le dégradé reste réservé aux titres. Le texte courant garde un contraste
+     stable sur les cartes et dans les liens, y compris hors écran calibré. */
   .hero h1 > span { display:inline-block; max-width:100%; }
   .section-title { width:fit-content; }
-  @supports (background-clip: text) or (-webkit-background-clip: text) {
-    .shell :is(h1,h2,h3,p,a,span) {
-      background-image: var(--text-gradient);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .shell .eyebrow {
-      background-image: var(--text-gradient), linear-gradient(#12322f,#12322f);
-      background-clip: text,padding-box;
-      -webkit-background-clip: text,padding-box;
-    }
-    .shell .btn {
-      background-image: var(--text-gradient-dark), linear-gradient(var(--turquoise),var(--turquoise));
-      background-clip: text,padding-box;
-      -webkit-background-clip: text,padding-box;
-    }
-  }
   @media (forced-colors: active) {
-    .shell :is(h1,h2,h3,p,a,span), .shell .hero h1.grad-text {
+    .shell .grad-text, .shell .hero h1.grad-text {
       background-image: none; color: CanvasText; -webkit-text-fill-color: CanvasText;
     }
     .shell .btn { border: 1px solid ButtonText; background: ButtonFace; }
@@ -558,7 +555,7 @@
   @media print {
     body { background: white; }
     body::before { display:none; }
-    .shell :is(h1,h2,h3,p,a,span), .shell .hero h1.grad-text {
+    .shell .grad-text, .shell .hero h1.grad-text {
       background-image: none; color:#111; -webkit-text-fill-color:#111;
     }
     .projet-card { background:white; }
@@ -580,103 +577,73 @@
 
   <header class="hero reveal" style="--i:0">
     <h1 class="grad-text"><span>Lefouzèbreizh</span> <span>Studio</span></h1>
-    <p class="lede">Sites internet et applications sur mesure, conçus avec âme — à Rennes et partout ailleurs.</p>
+    <p class="lede">Des sites clairs pour les professionnels, des audits pour les améliorer et un suivi quand ils évoluent. Basé à Rennes, au service des professionnels en Bretagne.</p>
+    <div class="hero-actions">
+      <a class="btn" href="#offres">Voir les offres</a>
+      <a class="btn-ghost" href="mailto:erwannchevallier@protonmail.com?subject=Parlons%20de%20mon%20site">Parler de mon site</a>
+    </div>
   </header>
 
-  <section>
-    <h2 class="section-title grad-text reveal" style="--i:0">Ce que je construis</h2>
-    <div class="projets-grid" aria-label="Projets en cours">
+  <section id="offres">
+    <h2 class="section-title grad-text reveal" style="--i:0">Trois façons d'avancer</h2>
+    <p class="section-intro reveal" style="--i:1">Lefouzèbreizh Studio réunit des services concrets, du premier site aux corrections et mises à jour. Chaque prestation garde un périmètre clair avant devis.</p>
+    <div class="projets-grid" aria-label="Offres principales">
 
       <article class="projet-card reveal" style="--i:1">
-        <a class="projet-card__link" href="https://ensemble-mdph.vercel.app/" aria-label="Découvrir Ensemble face aux démarches">
+        <a class="projet-card__link" href="https://artisan-express-ashy.vercel.app/" aria-label="Découvrir Artisan Express">
           <div class="projet-card__head">
-            <h3>Ensemble face aux démarches</h3>
-            <span class="status">En amélioration</span>
+            <h3>Artisan Express</h3>
+            <span class="status">En ligne</span>
           </div>
-          <span class="eyebrow">Aide aux démarches administratives</span>
-          <p>Un site qui accompagne pas à pas les personnes perdues face à leurs démarches administratives, à partir d'un vécu personnel. Il commence par la MDPH et s'élargira ensuite à d'autres situations.</p>
-          <span class="projet-card__action">Découvrir le site →</span>
+          <span class="eyebrow">Site d'une page pour artisans · 300 €</span>
+          <p>Une vitrine avec votre métier, vos réalisations et un accès direct au contact. Le créneau de réalisation est confirmé après réception de vos éléments. Le nom de domaine est en supplément.</p>
+          <span class="projet-card__action">Voir l'offre en ligne →</span>
         </a>
       </article>
 
       <article class="projet-card reveal" style="--i:2">
         <div class="projet-card__inner">
           <div class="projet-card__head">
-            <h3>Mon Tiroir Secret</h3>
-            <span class="status">Sécurisation en cours</span>
+            <h3>Déclic / Audit</h3>
+            <span class="status">Sur devis</span>
           </div>
-          <span class="eyebrow">Documents protégés</span>
-          <p>Un espace numérique français où plusieurs personnes peuvent protéger leurs documents sensibles et suivre leurs prochaines échéances.</p>
+          <span class="eyebrow">Diagnostic et corrections ciblées</span>
+          <p>Votre site existe déjà ? Nous repérons les freins à la lecture, au contact et à l'usage sur mobile, puis définissons les corrections prioritaires. Le périmètre et le prix sont convenus avant intervention.</p>
+          <a class="projet-card__action" href="mailto:erwannchevallier@protonmail.com?subject=Demande%20d%27audit%20de%20site">Parler d'un audit →</a>
         </div>
       </article>
 
       <article class="projet-card reveal" style="--i:3">
-        <a class="projet-card__link" href="https://artisan-express-ashy.vercel.app/" aria-label="Découvrir Artisan Express">
-          <div class="projet-card__head">
-            <h3>Artisan Express</h3>
-            <span class="status">En ligne</span>
-          </div>
-          <span class="eyebrow">Sites vitrine pour artisans</span>
-          <p>Un site vitrine professionnel livré en 48 h, à prix fixe et sans abonnement, pour les artisans qui veulent présenter clairement leur activité.</p>
-          <span class="projet-card__action">Découvrir le site →</span>
-        </a>
-      </article>
-
-      <article class="projet-card reveal" style="--i:4">
         <div class="projet-card__inner">
           <div class="projet-card__head">
-            <h3>Aznaroth</h3>
-            <span class="status">En amélioration</span>
+            <h3>Maintenance</h3>
+            <span class="status">Sur demande</span>
           </div>
-          <span class="eyebrow">Série TikTok · mythologie</span>
-          <p>Un univers original de créatures et de mythologie druidique, pensé pour les réseaux sociaux à travers l'écriture, l'image et le montage.</p>
-        </div>
-      </article>
-
-      <article class="projet-card reveal" style="--i:5">
-        <div class="projet-card__inner">
-          <div class="projet-card__head">
-            <h3>Look &amp; Find</h3>
-            <span class="status">Première version</span>
-          </div>
-          <span class="eyebrow">Reconnaissance d'objet par caméra</span>
-          <p>Une application mobile qui décrit l'objet filmé : son nom, sa catégorie, son usage et sa matière, sans inventer de marque. Sa couleur est mesurée directement par le téléphone et fonctionne hors ligne.</p>
-        </div>
-      </article>
-
-      <article class="projet-card reveal" style="--i:6">
-        <div class="projet-card__inner">
-          <div class="projet-card__head">
-            <h3>Accord</h3>
-            <span class="status">Prototype</span>
-          </div>
-          <span class="eyebrow">L'éveil des couleurs</span>
-          <p>Une application liée à Look &amp; Find qui propose des couleurs assorties et des idées de décoration. Elle attend encore ses photos de référence.</p>
+          <span class="eyebrow">Un site qui reste à jour</span>
+          <p>Photos, textes, liens et contrôles réguliers selon les besoins. Chaque intervention est proposée séparément ; aucun abonnement n'est imposé avec Artisan Express.</p>
+          <a class="projet-card__action" href="mailto:erwannchevallier@protonmail.com?subject=Suivi%20de%20mon%20site">Demander un suivi →</a>
         </div>
       </article>
 
     </div>
   </section>
 
-  <section class="rows reveal" style="--i:2" aria-label="Prestations">
-    <article class="row">
-      <h2>Site internet sur mesure</h2>
-      <p>Une vitrine claire, rapide et efficace pour présenter votre activité, quel que soit votre métier. Conçue pour convertir, pas juste pour faire joli.</p>
-    </article>
-    <article class="row">
-      <h2>Application sur mesure</h2>
-      <p>Une application mobile conçue pour votre besoin réel, de la définition du projet jusqu'à sa mise en ligne sur les boutiques d'applications.</p>
-    </article>
-  </section>
-
-  <section class="reveal" style="--i:3">
-    <h2 class="section-title grad-text">Mes applications</h2>
-    <div class="rows" aria-label="Applications">
+  <section class="reveal" style="--i:2">
+    <h2 class="section-title grad-text">Deux réalisations à explorer</h2>
+    <p class="section-intro">Ces pages montrent le travail déjà visible en ligne. Une démonstration ou un déploiement ne vaut pas référence client.</p>
+    <div class="rows" aria-label="Réalisations accessibles">
       <article class="row">
-        <h3>Look &amp; Find</h3>
+        <h3>Artisan Express</h3>
         <div>
-          <p>Application mobile qui décrit un objet visé à la caméra — nom, usage, matière, couleur mesurée sur l'appareil.</p>
-          <span class="status">Bientôt disponible</span>
+          <p>La page de l'offre, ses exemples de métiers fictifs et le parcours de demande.</p>
+          <a class="projet-card__action" href="https://artisan-express-ashy.vercel.app/">Voir Artisan Express →</a>
+        </div>
+      </article>
+      <article class="row">
+        <h3>Ensemble face aux démarches</h3>
+        <div>
+          <p>Un parcours d'aide administrative accessible en ligne, encore en amélioration. Présenté ici comme exemple d'expérience numérique, sans référence commerciale.</p>
+          <a class="projet-card__action" href="https://ensemble-face-aux-demarches.vercel.app/">Explorer la démonstration →</a>
         </div>
       </article>
     </div>
@@ -684,11 +651,11 @@
 
   <section class="cta reveal" style="--i:4">
     <div>
-      <h2 class="grad-text">Une idée de site ou d'application ?</h2>
-      <p>Racontez-moi votre projet, simplement et sans promesse en l'air — je réponds sous 48 h.</p>
+      <h2 class="grad-text">Parlons de votre site</h2>
+      <p>Création, audit ou mise à jour : décrivez votre besoin, et je vous répondrai avec une prochaine étape claire.</p>
     </div>
     <div class="cta-actions">
-      <a class="btn" href="mailto:erwannchevallier@protonmail.com?subject=Mon%20projet%20de%20site%20ou%20d%27application">Discutons de mon projet</a>
+      <a class="btn" href="mailto:erwannchevallier@protonmail.com?subject=Mon%20projet%20de%20site">Discutons de mon site</a>
       <a class="btn-ghost" href="https://www.facebook.com/profile.php?id=61551926225174" target="_blank" rel="noopener">ou retrouvez-moi sur Facebook</a>
     </div>
   </section>
@@ -737,3 +704,4 @@
 
 </body>
 </html>
+
