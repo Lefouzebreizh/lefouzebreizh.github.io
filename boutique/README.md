@@ -6,6 +6,8 @@ Projet statique et serverless destiné au projet Vercel project-ait8y. Le paieme
 
 Relier le projet à ce dépôt, choisir la branche musique-vercel et définir le répertoire racine boutique. Le site utilise les fonctions Node intégrées du dossier api/ et les pages HTML de ce dossier.
 
+La boutique se trouve dans le sous-répertoire boutique; la branche musique-vercel garde le site principal de ce dépôt intact.
+
 ## Variables d’environnement nécessaires
 
 - STRIPE_SECRET_KEY: clé secrète Stripe de test (préfixe sk_test_ pour cette configuration).
