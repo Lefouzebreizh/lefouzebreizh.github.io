@@ -8,12 +8,16 @@ async function retrieveSession(id, secret) {
   return response.json();
 }
 
+async function retrievePrivateBlob(url) {
+  const { get } = await import("@vercel/blob");
+  return get(url, { access: "private" });
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== "GET") return res.status(405).end("Méthode non autorisée.");
   const secret = process.env.STRIPE_SECRET_KEY;
-  const token = process.env.BLOB_READ_WRITE_TOKEN;
   const id = typeof req.query.session_id === "string" ? req.query.session_id : "";
-  if (!secret || !token || !id || !/^cs_(test|live)_[A-Za-z0-9_]+$/.test(id)) return res.status(400).end("Lien de téléchargement invalide.");
+  if (!secret || !id || !/^cs_(test|live)_[A-Za-z0-9_]+$/.test(id)) return res.status(400).end("Lien de téléchargement invalide.");
   try {
     const session = await retrieveSession(id, secret);
     const expectedLive = secret.startsWith("sk_live_");
@@ -29,17 +33,17 @@ module.exports = async function handler(req, res) {
       fileUrl = process.env.ALBUM_BLOB_URL;
       filename = "Souffler_sur_les_Breizh_album.zip";
     }
-    if (!fileUrl || !token) return res.status(503).end("Le téléchargement est en cours de préparation.");
+    if (!fileUrl) return res.status(503).end("Le téléchargement est en cours de préparation.");
     const parsed = new URL(fileUrl);
-    if (!parsed.hostname.endsWith(".private.blob.vercel-storage.com") || parsed.protocol !== "https:") return res.status(503).end("Le stockage privé n’est pas configuré.");
-    const file = await fetch(parsed, { headers: { Authorization: "Bearer " + token }, cache: "no-store" });
-    if (!file.ok || !file.body) return res.status(502).end("Le fichier n’est pas disponible pour le moment.");
-    res.setHeader("Content-Type", "application/zip");
+    if (parsed.protocol !== "https:" || !parsed.hostname.endsWith(".private.blob.vercel-storage.com")) return res.status(503).end("Le stockage privé n’est pas configuré.");
+    const file = await retrievePrivateBlob(parsed.toString());
+    if (!file || file.statusCode !== 200 || !file.stream) return res.status(502).end("Le fichier n’est pas disponible pour le moment.");
+    res.setHeader("Content-Type", file.blob.contentType || "application/zip");
     res.setHeader("Content-Disposition", 'attachment; filename="' + filename + '"');
     res.setHeader("Cache-Control", "private, no-store, max-age=0");
     res.setHeader("X-Content-Type-Options", "nosniff");
-    if (file.headers.get("content-length")) res.setHeader("Content-Length", file.headers.get("content-length"));
-    Readable.fromWeb(file.body).pipe(res);
+    if (typeof file.blob.size === "number") res.setHeader("Content-Length", String(file.blob.size));
+    Readable.fromWeb(file.stream).pipe(res);
   } catch {
     if (!res.headersSent) return res.status(502).end("Téléchargement momentanément indisponible.");
     res.end();
