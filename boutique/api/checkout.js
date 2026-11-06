@@ -3,7 +3,8 @@ const PRICES = { album: process.env.PRICE_ALBUM_ID, edition: process.env.PRICE_E
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Méthode non autorisée." });
   const secret = process.env.STRIPE_SECRET_KEY;
-  if (!secret || !PRICES.album || !PRICES.edition) return res.status(503).json({ error: "Le paiement est encore en préparation." });
+  const filesReady = process.env.ALBUM_BLOB_URL && process.env.EDITION_BLOB_URL;
+  if (!secret || !PRICES.album || !PRICES.edition || !filesReady) return res.status(503).json({ error: "Le paiement et le téléchargement sont encore en préparation." });
   const offer = req.body && req.body.offer;
   const price = PRICES[offer];
   if (!price) return res.status(400).json({ error: "Cette édition n’existe pas." });
