@@ -1,32 +1,28 @@
 # Boutique numerique — Souffler sur les Breizh
 
-Projet statique et serverless destiné au projet Vercel project-ait8y. Le paiement passe par Stripe Checkout; la route de téléchargement vérifie le statut payé et les articles de la session avant de lire une archive depuis un stockage Blob privé.
+Projet statique et serverless pour le projet Vercel `project-ait8y`. Le paiement passe par Stripe Checkout. Après vérification du paiement, la route de téléchargement lit l’archive correspondante depuis un Blob Vercel privé.
 
-## Vercel
+## Configuration Vercel
 
-Relier le projet à ce dépôt, choisir la branche musique-vercel et définir le répertoire racine boutique. Le site utilise les fonctions Node intégrées du dossier api/ et les pages HTML de ce dossier.
+Le projet utilise la branche `musique-vercel` et le répertoire racine `boutique`.
 
-La boutique se trouve dans le sous-répertoire boutique; la branche musique-vercel garde le site principal de ce dépôt intact.
+Variables nécessaires en Production :
 
-## Variables d’environnement nécessaires
+- `STRIPE_SECRET_KEY` : clé secrète Stripe de production (`sk_live_…`). Ne jamais la stocker dans GitHub ni l’envoyer dans une conversation.
+- `PRICE_ALBUM_ID` : tarif Stripe en production pour l’album seul.
+- `PRICE_EDITION_ID` : tarif Stripe en production pour l’album avec livret.
+- `PUBLIC_SITE_URL` : URL de production Vercel.
+- `BLOB_STORE_ID` : ajouté par Vercel lorsque le Blob privé est relié au projet.
+- `ALBUM_BLOB_URL` : URL privée de l’archive album seul.
+- `EDITION_BLOB_URL` : URL privée de l’archive album + livret.
 
-- STRIPE_SECRET_KEY: clé secrète Stripe de test (préfixe sk_test_ pour cette configuration).
-- PRICE_ALBUM_ID: identifiant du tarif de l’album seul en mode test.
-- PRICE_EDITION_ID: identifiant du tarif album + livret en mode test.
-- PUBLIC_SITE_URL: URL Vercel de ce projet.
-- BLOB_READ_WRITE_TOKEN: jeton d’un store Vercel Blob privé.
-- ALBUM_BLOB_URL: URL privée de l’archive album seul.
-- EDITION_BLOB_URL: URL privée de l’archive album + livret.
+Le téléchargement privé utilise `@vercel/blob` et l’authentification OIDC du projet. Ne pas ajouter les archives comme fichiers publics.
 
-Les identifiants de prix ne sont pas stockés dans le code. N’inscris jamais une clé secrète dans GitHub ou dans une conversation. Configure-la dans les variables d’environnement du projet Vercel.
+## Fichiers à déposer dans le Blob privé
 
-## Fichiers numériques attendus
-
-- Album seul : 13 fichiers audio, sans livret.
+- Album seul : les 13 fichiers audio, sans livret.
 - Édition avec livret : les mêmes 13 fichiers audio et le PDF du livret.
-
-Les deux URL d’archives doivent pointer vers le stockage privé. Les liens publics directs ne doivent pas être utilisés pour les fichiers payants.
 
 ## État
 
-La boutique est une base de préparation. La configuration des secrets Stripe, du store privé et des fichiers doit être terminée avant toute vente réelle. Les offres Stripe actuellement préparées sont en mode test.
+Les produits et tarifs Stripe de production sont créés et les variables de prix sont configurées dans Vercel. La vente et la livraison automatique ne sont prêtes qu’après le dépôt des deux archives dans le Blob privé et l’ajout de leurs URLs dans les variables Vercel.
